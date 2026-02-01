@@ -1,7 +1,7 @@
-import { ObjectId } from 'mongodb';
+// TypeScript type definitions for Cyprus Real Estate project
 
 export interface Property {
-  _id?: ObjectId;
+  _id?: string;
   title: string;
   titleHe: string;
   price: number;
@@ -17,10 +17,9 @@ export interface Property {
     bedrooms: number;
     bathrooms: number;
     sqm: number;
-    pool?: boolean;
-    garden?: boolean;
-    parking?: boolean;
+    pool: boolean;
     seaview?: boolean;
+    parking?: boolean;
   };
   description: string;
   descriptionHe: string;
@@ -29,48 +28,56 @@ export interface Property {
     rentalYield: number;
     appreciation: number;
   };
-  propertyType: 'villa' | 'apartment' | 'penthouse' | 'townhouse';
+  propertyType: string;
   propertyTypeHe: string;
   slug: string;
-  createdAt: Date;
+  createdAt: string;
   published: boolean;
-  source: string;
+  source?: string;
 }
 
 export interface Article {
-  _id?: ObjectId;
+  _id?: string;
   title: string;
   titleHe: string;
-  content: string;
-  contentHe: string;
-  category: 'investment-guide' | 'market-analysis' | 'legal' | 'lifestyle';
-  categoryHe: string;
+  content?: string;
+  contentHtml?: string;
+  contentHe?: string;
+  category?: string;
+  categoryHe?: string;
   slug: string;
-  excerpt: string;
-  excerptHe: string;
-  readTime: number;
+  excerpt?: string;
+  excerptHe?: string;
+  readTime?: number;
   image?: string;
-  createdAt: Date;
+  featuredImageUrl?: string;
+  keywords?: string[];
+  createdAt: string;
+  updatedAt?: string;
   published: boolean;
+  status?: 'pending' | 'approved' | 'rejected';
+  source?: string;
+  approvedAt?: string;
 }
 
 export interface Lead {
-  _id?: ObjectId;
+  _id?: string;
   name: string;
   email: string;
   phone: string;
-  interestedIn: string[];
   budget: string;
   message?: string;
+  interestedIn?: string[];
   createdAt: Date;
+  source: string;
 }
 
-export interface SearchFilters {
-  city?: string;
-  minPrice?: number;
-  maxPrice?: number;
-  bedrooms?: number;
-  propertyType?: string;
-  hasPool?: boolean;
-  hasSeaview?: boolean;
+export interface AdminUser {
+  _id?: string;
+  username: string;
+  email: string;
+  passwordHash: string;
+  role: 'admin' | 'editor';
+  createdAt: Date;
+  lastLogin?: Date;
 }

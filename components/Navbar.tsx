@@ -2,12 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Menu, X, Building2, Phone, Mail } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { Menu, X, Building2, Phone, Mail, Shield, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,6 +20,24 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    const checkAdminAuth = async () => {
+      try {
+        const res = await fetch('/api/admin/stats');
+        setIsAdmin(res.ok);
+      } catch {
+        setIsAdmin(false);
+      }
+    };
+    checkAdminAuth();
+  }, []);
+
+  const handleLogout = async () => {
+    await fetch('/api/admin/auth/logout', { method: 'POST' });
+    setIsAdmin(false);
+    router.push('/admin');
+  };
 
   const navLinks = [
     { href: '/', label: 'בית' },
@@ -47,6 +68,28 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            {isAdmin && (
+              <>
+                <Link
+                  href="/admin/dashboard"
+                  className={`flex items-center gap-1 font-medium hover:text-ocean-500 transition-colors ${
+                    scrolled ? 'text-gray-900' : 'text-white'
+                  }`}
+                >
+                  <Shield className="w-4 h-4" />
+                  פאנל ניהול
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className={`flex items-center gap-1 font-medium hover:text-red-500 transition-colors ${
+                    scrolled ? 'text-gray-900' : 'text-white'
+                  }`}
+                >
+                  <LogOut className="w-4 h-4" />
+                  יציאה
+                </button>
+              </>
+            )}
             <Link href="/contact" className="btn-primary text-sm py-2 px-6">
               קבעו פגישה
             </Link>
@@ -107,6 +150,28 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              {isAdmin && (
+                <>
+                  <Link
+                    href="/admin/dashboard"
+                    onClick={() => setIsOpen(false)}
+                    className="flex items-center gap-2 py-2 text-gray-700 hover:text-ocean-500 transition-colors font-medium"
+                  >
+                    <Shield className="w-4 h-4" />
+                    פאנל ניהול
+                  </Link>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      handleLogout();
+                    }}
+                    className="flex items-center gap-2 py-2 text-gray-700 hover:text-red-500 transition-colors font-medium w-full text-right"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    יציאה
+                  </button>
+                </>
+              )}
               <Link
                 href="/contact"
                 onClick={() => setIsOpen(false)}

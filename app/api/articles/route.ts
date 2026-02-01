@@ -6,7 +6,7 @@ export async function GET(request: Request) {
   try {
     const client = await clientPromise;
     const db = client.db('cyprus_invest');
-    
+
     // Try to fetch from MongoDB
     let articles = await db
       .collection('articles')
@@ -21,16 +21,16 @@ export async function GET(request: Request) {
       articles = mockArticles as any;
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       articles,
-      count: articles.length 
+      count: articles.length,
     });
   } catch (error) {
     console.error('Error fetching articles:', error);
     // Return mock data on error
-    return NextResponse.json({ 
+    return NextResponse.json({
       articles: mockArticles,
-      count: mockArticles.length 
+      count: mockArticles.length,
     });
   }
 }
