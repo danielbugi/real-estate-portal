@@ -72,17 +72,20 @@ export function checkRateLimit(identifier: string): {
 }
 
 // Cleanup old entries every hour
-setInterval(() => {
-  const now = Date.now();
-  for (const [key, value] of rateLimitStore.entries()) {
-    if (
-      value.resetTime < now &&
-      (!value.blockedUntil || value.blockedUntil < now)
-    ) {
-      rateLimitStore.delete(key);
+setInterval(
+  () => {
+    const now = Date.now();
+    for (const [key, value] of rateLimitStore.entries()) {
+      if (
+        value.resetTime < now &&
+        (!value.blockedUntil || value.blockedUntil < now)
+      ) {
+        rateLimitStore.delete(key);
+      }
     }
-  }
-}, 60 * 60 * 1000);
+  },
+  60 * 60 * 1000,
+);
 
 // ============================================
 // 🧹 INPUT SANITIZATION (Injection Protection)
@@ -146,10 +149,10 @@ const JWT_SECRET =
 
 export function generateToken(payload: any): string {
   const header = Buffer.from(
-    JSON.stringify({ alg: 'HS256', typ: 'JWT' })
+    JSON.stringify({ alg: 'HS256', typ: 'JWT' }),
   ).toString('base64url');
   const body = Buffer.from(
-    JSON.stringify({ ...payload, exp: Date.now() + 24 * 60 * 60 * 1000 })
+    JSON.stringify({ ...payload, exp: Date.now() + 24 * 60 * 60 * 1000 }),
   ).toString('base64url');
 
   const signature = crypto
@@ -204,12 +207,26 @@ export interface LogEntry {
 
 export function createLogEntry(
   request: NextRequest,
-  additionalData?: Partial<LogEntry>
+  additionalData?: Partial<LogEntry>,
 ): LogEntry {
-  const ip =
-    request.headers.get('x-forwarded-for') ||
+  // Try multiple sources for IP address
+  let ip =
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     request.headers.get('x-real-ip') ||
+    request.headers.get('cf-connecting-ip') || // Cloudflare
+    request.headers.get('x-client-ip') ||
+    request.ip || // Next.js may populate this
     'unknown';
+
+  // Normalize IPv6 localhost to IPv4
+  if (ip === '::1' || ip === '::ffff:127.0.0.1') {
+    ip = '127.0.0.1';
+  }
+
+  // For local development, use localhost IP
+  if (ip === 'unknown' && process.env.NODE_ENV === 'development') {
+    ip = '127.0.0.1';
+  }
 
   return {
     timestamp: new Date(),
@@ -232,7 +249,7 @@ export function addSecurityHeaders(response: NextResponse): NextResponse {
   response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   response.headers.set(
     'Content-Security-Policy',
-    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline';",
   );
   return response;
 }
@@ -253,7 +270,7 @@ export function requireAuth(request: NextRequest): {
       authenticated: false,
       response: NextResponse.json(
         { error: 'Unauthorized - No token provided' },
-        { status: 401 }
+        { status: 401 },
       ),
     };
   }
@@ -265,7 +282,7 @@ export function requireAuth(request: NextRequest): {
       authenticated: false,
       response: NextResponse.json(
         { error: 'Unauthorized - Invalid or expired token' },
-        { status: 401 }
+        { status: 401 },
       ),
     };
   }

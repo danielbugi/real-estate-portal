@@ -32,7 +32,11 @@ interface ArticleEditorProps {
   onCancel?: () => void;
 }
 
-export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEditorProps) {
+export default function ArticleEditor({
+  articleId,
+  onSave,
+  onCancel,
+}: ArticleEditorProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -91,7 +95,10 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
   };
 
   const handleAddKeyword = () => {
-    if (keywordInput.trim() && !formData.keywords.includes(keywordInput.trim())) {
+    if (
+      keywordInput.trim() &&
+      !formData.keywords.includes(keywordInput.trim())
+    ) {
       setFormData({
         ...formData,
         keywords: [...formData.keywords, keywordInput.trim()],
@@ -162,34 +169,7 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
   }
 
   return (
-    <div className="max-w-5xl mx-auto">
-      {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">
-            {articleId ? 'Edit Article' : 'Create New Article'}
-          </h1>
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setShowPreview(!showPreview)}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
-            >
-              <Eye className="w-4 h-4" />
-              {showPreview ? 'Edit' : 'Preview'}
-            </button>
-            {onCancel && (
-              <button
-                onClick={onCancel}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
-              >
-                <X className="w-4 h-4" />
-                Cancel
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
+    <div className="max-w-5xl mx-auto pt-20">
       {showPreview ? (
         // Preview Mode
         <div className="bg-white rounded-lg shadow-sm p-8">
@@ -200,8 +180,12 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
               className="w-full h-64 object-cover rounded-lg mb-6"
             />
           )}
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">{formData.title}</h1>
-          <p className="text-xl text-gray-600 mb-2 dir-rtl">{formData.titleHe}</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            {formData.title}
+          </h1>
+          <p className="text-xl text-gray-600 mb-2 dir-rtl">
+            {formData.titleHe}
+          </p>
           <p className="text-gray-500 mb-6">{formData.excerpt}</p>
           <div className="flex flex-wrap gap-2 mb-6">
             {formData.keywords.map((keyword) => (
@@ -223,8 +207,10 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
         <div className="space-y-6">
           {/* Basic Info */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Basic Information</h2>
-            
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Basic Information
+            </h2>
+
             {/* Title */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -247,7 +233,9 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
               <input
                 type="text"
                 value={formData.titleHe}
-                onChange={(e) => setFormData({ ...formData, titleHe: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, titleHe: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none dir-rtl"
                 placeholder="הכנס כותרת המאמר בעברית"
               />
@@ -261,7 +249,9 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
               <input
                 type="text"
                 value={formData.slug}
-                onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, slug: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none"
                 placeholder="article-url-slug"
               />
@@ -274,7 +264,9 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
               </label>
               <textarea
                 value={formData.excerpt}
-                onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, excerpt: e.target.value })
+                }
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none"
                 placeholder="Short summary of the article"
@@ -288,7 +280,9 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
               </label>
               <textarea
                 value={formData.excerptHe}
-                onChange={(e) => setFormData({ ...formData, excerptHe: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, excerptHe: e.target.value })
+                }
                 rows={3}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none dir-rtl"
                 placeholder="תקציר קצר של המאמר"
@@ -304,7 +298,12 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
                 <input
                   type="text"
                   value={formData.featuredImageUrl}
-                  onChange={(e) => setFormData({ ...formData, featuredImageUrl: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      featuredImageUrl: e.target.value,
+                    })
+                  }
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none"
                   placeholder="https://example.com/image.jpg"
                 />
@@ -331,7 +330,10 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
                   type="text"
                   value={keywordInput}
                   onChange={(e) => setKeywordInput(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddKeyword())}
+                  onKeyPress={(e) =>
+                    e.key === 'Enter' &&
+                    (e.preventDefault(), handleAddKeyword())
+                  }
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none"
                   placeholder="Add keyword and press Enter"
                 />
@@ -363,10 +365,14 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
 
           {/* Content Editor */}
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Content (HTML) *</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Content (HTML) *
+            </h2>
             <textarea
               value={formData.contentHtml}
-              onChange={(e) => setFormData({ ...formData, contentHtml: e.target.value })}
+              onChange={(e) =>
+                setFormData({ ...formData, contentHtml: e.target.value })
+              }
               rows={20}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none font-mono text-sm"
               placeholder="<p>Write your article content in HTML...</p>"
@@ -384,10 +390,14 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
                   <input
                     type="checkbox"
                     checked={formData.published}
-                    onChange={(e) => setFormData({ ...formData, published: e.target.checked })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, published: e.target.checked })
+                    }
                     className="w-4 h-4 text-ocean-600 border-gray-300 rounded focus:ring-ocean-500"
                   />
-                  <span className="text-sm font-medium text-gray-700">Published</span>
+                  <span className="text-sm font-medium text-gray-700">
+                    Published
+                  </span>
                 </label>
               </div>
 
@@ -397,7 +407,11 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
                   disabled={isSaving}
                   className="flex items-center gap-2 px-6 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition disabled:opacity-50"
                 >
-                  {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
                   Save as Draft
                 </button>
                 <button
@@ -405,7 +419,11 @@ export default function ArticleEditor({ articleId, onSave, onCancel }: ArticleEd
                   disabled={isSaving}
                   className="flex items-center gap-2 px-6 py-2 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition disabled:opacity-50"
                 >
-                  {isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                  {isSaving ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
                   Save & Publish
                 </button>
               </div>

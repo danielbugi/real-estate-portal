@@ -40,7 +40,9 @@ export default function ArticleManagementPage() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [publishedFilter, setPublishedFilter] = useState<string>('all');
   const [showEditor, setShowEditor] = useState(false);
-  const [editingArticleId, setEditingArticleId] = useState<string | undefined>();
+  const [editingArticleId, setEditingArticleId] = useState<
+    string | undefined
+  >();
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [showPreview, setShowPreview] = useState(false);
 
@@ -77,7 +79,7 @@ export default function ArticleManagementPage() {
       filtered = filtered.filter(
         (article) =>
           article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          article.titleHe.includes(searchTerm)
+          article.titleHe.includes(searchTerm),
       );
     }
 
@@ -89,7 +91,7 @@ export default function ArticleManagementPage() {
     // Published filter
     if (publishedFilter !== 'all') {
       filtered = filtered.filter(
-        (article) => article.published === (publishedFilter === 'published')
+        (article) => article.published === (publishedFilter === 'published'),
       );
     }
 
@@ -107,7 +109,11 @@ export default function ArticleManagementPage() {
   };
 
   const handleDelete = async (articleId: string) => {
-    if (!confirm('Are you sure you want to delete this article? This cannot be undone.')) {
+    if (
+      !confirm(
+        'Are you sure you want to delete this article? This cannot be undone.',
+      )
+    ) {
       return;
     }
 
@@ -127,7 +133,10 @@ export default function ArticleManagementPage() {
     }
   };
 
-  const handleTogglePublish = async (articleId: string, currentlyPublished: boolean) => {
+  const handleTogglePublish = async (
+    articleId: string,
+    currentlyPublished: boolean,
+  ) => {
     try {
       const res = await fetch(`/api/admin/articles/${articleId}`, {
         method: 'PUT',
@@ -152,7 +161,7 @@ export default function ArticleManagementPage() {
 
   if (showEditor) {
     return (
-      <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <div className="min-h-screen bg-gray-600 py-8 px-4">
         <ArticleEditor
           articleId={editingArticleId}
           onSave={() => {
@@ -166,26 +175,7 @@ export default function ArticleManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Article Management</h1>
-              <p className="text-sm text-gray-500">Create, edit, and manage all articles</p>
-            </div>
-            <button
-              onClick={handleCreateNew}
-              className="flex items-center gap-2 px-4 py-2 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition"
-            >
-              <Plus className="w-4 h-4" />
-              Create New Article
-            </button>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gray-600 pt-20 px-4">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -306,7 +296,9 @@ export default function ArticleManagementPage() {
                           />
                         )}
                         <div>
-                          <div className="font-medium text-gray-900">{article.title}</div>
+                          <div className="font-medium text-gray-900">
+                            {article.title}
+                          </div>
                           <div className="text-sm text-gray-500 mt-1 dir-rtl">
                             {article.titleHe}
                           </div>
@@ -318,13 +310,17 @@ export default function ArticleManagementPage() {
                     </td>
                     <td className="px-6 py-4">
                       <button
-                        onClick={() => handleTogglePublish(article._id, article.published)}
+                        onClick={() =>
+                          handleTogglePublish(article._id, article.published)
+                        }
                         className="flex items-center gap-2"
                       >
                         {article.published ? (
                           <>
                             <ToggleRight className="w-5 h-5 text-green-600" />
-                            <span className="text-sm text-green-600">Published</span>
+                            <span className="text-sm text-green-600">
+                              Published
+                            </span>
                           </>
                         ) : (
                           <>
@@ -377,8 +373,12 @@ export default function ArticleManagementPage() {
             <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-10">
               <div className="flex items-start justify-between">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">{selectedArticle.title}</h2>
-                  <p className="text-gray-500 mt-1 dir-rtl">{selectedArticle.titleHe}</p>
+                  <h2 className="text-2xl font-bold text-gray-900">
+                    {selectedArticle.title}
+                  </h2>
+                  <p className="text-gray-500 mt-1 dir-rtl">
+                    {selectedArticle.titleHe}
+                  </p>
                 </div>
                 <button
                   onClick={() => setShowPreview(false)}
@@ -399,7 +399,9 @@ export default function ArticleManagementPage() {
               )}
               <div
                 className="prose max-w-none"
-                dangerouslySetInnerHTML={{ __html: selectedArticle.contentHtml || '' }}
+                dangerouslySetInnerHTML={{
+                  __html: selectedArticle.contentHtml || '',
+                }}
               />
             </div>
 
@@ -442,7 +444,11 @@ function StatCard({ icon, title, value, color }: any) {
           <p className="text-sm font-medium text-gray-600">{title}</p>
           <p className="text-3xl font-bold text-gray-900 mt-2">{value}</p>
         </div>
-        <div className={`p-3 rounded-lg ${colors[color as keyof typeof colors]}`}>{icon}</div>
+        <div
+          className={`p-3 rounded-lg ${colors[color as keyof typeof colors]}`}
+        >
+          {icon}
+        </div>
       </div>
     </div>
   );

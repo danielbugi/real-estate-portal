@@ -1,36 +1,41 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import clientPromise from '@/lib/mongodb';
-import { mockArticles } from '@/lib/mock-data';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const published = searchParams.get('published');
+    const limit = parseInt(searchParams.get('limit') || '50');
+
     const client = await clientPromise;
     const db = client.db('cyprus_invest');
 
-    // Try to fetch from MongoDB
-    let articles = await db
-      .collection('articles')
-      .find({ published: true })
-      .sort({ createdAt: -1 })
-      .limit(10)
-      .toArray();
-
-    // If no articles in DB, use mock data
-    if (articles.length === 0) {
-      console.log('No articles in DB, using mock data');
-      articles = mockArticles as any;
+    // Query only published articles for public view
+    const query: any = {};
+    if (published === 'true') {
+      query.published = true;
+      query.status = 'approved'; // Only show approved articles
     }
 
+    const articles = await db
+      .collection('articles')
+      .find(query)
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .toArray();
+
     return NextResponse.json({
+      success: true,
       articles,
-      count: articles.length,
     });
   } catch (error) {
-    console.error('Error fetching articles:', error);
-    // Return mock data on error
-    return NextResponse.json({
-      articles: mockArticles,
-      count: mockArticles.length,
-    });
+    console.error('Get articles error:', error);
+    return NextResponse.json(
+      {
+        error: 'Internal server error',
+        articles: [],
+      },
+      { status: 500 },
+    );
   }
 }

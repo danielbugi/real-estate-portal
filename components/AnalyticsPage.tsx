@@ -16,6 +16,8 @@ import {
   Shield,
   MapPin,
   Calendar,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
 interface LogEntry {
@@ -49,6 +51,8 @@ export default function AnalyticsPage() {
   const [timeRange, setTimeRange] = useState('24h');
   const [ipFilter, setIpFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(25);
 
   useEffect(() => {
     fetchAnalytics();
@@ -60,7 +64,7 @@ export default function AnalyticsPage() {
       // Calculate date range
       const now = new Date();
       const startDate = new Date();
-      
+
       switch (timeRange) {
         case '1h':
           startDate.setHours(now.getHours() - 1);
@@ -83,7 +87,7 @@ export default function AnalyticsPage() {
       });
 
       const res = await fetch(`/api/admin/logs?${params}`);
-      
+
       if (res.status === 401) {
         router.push('/admin');
         return;
@@ -107,8 +111,12 @@ export default function AnalyticsPage() {
     const uniqueIPs = new Set(logData.map((log) => log.ip));
 
     // Success/Error rates
-    const successRequests = logData.filter((log) => log.status && log.status < 400).length;
-    const errorRequests = logData.filter((log) => log.status && log.status >= 400).length;
+    const successRequests = logData.filter(
+      (log) => log.status && log.status < 400,
+    ).length;
+    const errorRequests = logData.filter(
+      (log) => log.status && log.status >= 400,
+    ).length;
     const totalRequests = logData.length;
 
     // Top IPs
@@ -154,7 +162,8 @@ export default function AnalyticsPage() {
     setStats({
       totalRequests,
       uniqueIPs: uniqueIPs.size,
-      successRate: totalRequests > 0 ? (successRequests / totalRequests) * 100 : 0,
+      successRate:
+        totalRequests > 0 ? (successRequests / totalRequests) * 100 : 0,
       errorRate: totalRequests > 0 ? (errorRequests / totalRequests) * 100 : 0,
       topIPs,
       topEndpoints,
@@ -166,14 +175,35 @@ export default function AnalyticsPage() {
   const filteredLogs = logs.filter((log) => {
     if (ipFilter && !log.ip.includes(ipFilter)) return false;
     if (statusFilter !== 'all') {
-      if (statusFilter === 'success' && (!log.status || log.status >= 400)) return false;
-      if (statusFilter === 'error' && log.status && log.status < 400) return false;
+      if (statusFilter === 'success' && (!log.status || log.status >= 400))
+        return false;
+      if (statusFilter === 'error' && log.status && log.status < 400)
+        return false;
     }
     return true;
   });
 
+  // Pagination calculations
+  const totalPages = Math.ceil(filteredLogs.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedLogs = filteredLogs.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [ipFilter, statusFilter, itemsPerPage]);
+
   const exportCSV = () => {
-    const headers = ['Timestamp', 'IP', 'Method', 'URL', 'Status', 'User ID', 'Error'];
+    const headers = [
+      'Timestamp',
+      'IP',
+      'Method',
+      'URL',
+      'Status',
+      'User ID',
+      'Error',
+    ];
     const rows = filteredLogs.map((log) => [
       log.timestamp,
       log.ip,
@@ -194,35 +224,7 @@ export default function AnalyticsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Analytics & Traffic Monitoring</h1>
-              <p className="text-sm text-gray-500">Real-time traffic analysis and request logs</p>
-            </div>
-            <div className="flex items-center gap-3">
-              <button
-                onClick={fetchAnalytics}
-                className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition"
-              >
-                <RefreshCw className="w-4 h-4" />
-                Refresh
-              </button>
-              <button
-                onClick={exportCSV}
-                className="flex items-center gap-2 px-4 py-2 bg-ocean-600 text-white rounded-lg hover:bg-ocean-700 transition"
-              >
-                <Download className="w-4 h-4" />
-                Export CSV
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen bg-gray-600 pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Time Range Filter */}
         <div className="bg-white rounded-lg shadow-sm p-4 mb-6">
@@ -300,10 +302,17 @@ export default function AnalyticsPage() {
                   </h2>
                   <div className="space-y-3">
                     {stats.topIPs.map((item, index) => (
-                      <div key={item.ip} className="flex items-center justify-between">
+                      <div
+                        key={item.ip}
+                        className="flex items-center justify-between"
+                      >
                         <div className="flex items-center gap-3">
-                          <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
-                          <span className="text-sm text-gray-900 font-mono">{item.ip}</span>
+                          <span className="text-sm font-medium text-gray-500">
+                            #{index + 1}
+                          </span>
+                          <span className="text-sm text-gray-900 font-mono">
+                            {item.ip}
+                          </span>
                         </div>
                         <div className="flex items-center gap-2">
                           <div className="w-24 bg-gray-200 rounded-full h-2">
@@ -331,9 +340,14 @@ export default function AnalyticsPage() {
                   </h2>
                   <div className="space-y-3">
                     {stats.topEndpoints.map((item, index) => (
-                      <div key={item.url} className="flex items-center justify-between">
+                      <div
+                        key={item.url}
+                        className="flex items-center justify-between"
+                      >
                         <div className="flex items-center gap-3 flex-1 min-w-0">
-                          <span className="text-sm font-medium text-gray-500">#{index + 1}</span>
+                          <span className="text-sm font-medium text-gray-500">
+                            #{index + 1}
+                          </span>
                           <span className="text-sm text-gray-900 font-mono truncate">
                             {item.url}
                           </span>
@@ -357,10 +371,16 @@ export default function AnalyticsPage() {
                 </h2>
                 <div className="flex items-end justify-between h-64 gap-2">
                   {stats.requestsByHour.map((item) => {
-                    const maxCount = Math.max(...stats.requestsByHour.map((h) => h.count));
-                    const height = maxCount > 0 ? (item.count / maxCount) * 100 : 0;
+                    const maxCount = Math.max(
+                      ...stats.requestsByHour.map((h) => h.count),
+                    );
+                    const height =
+                      maxCount > 0 ? (item.count / maxCount) * 100 : 0;
                     return (
-                      <div key={item.hour} className="flex-1 flex flex-col items-center gap-2">
+                      <div
+                        key={item.hour}
+                        className="flex-1 flex flex-col items-center gap-2"
+                      >
                         <div
                           className="w-full bg-ocean-600 rounded-t hover:bg-ocean-700 transition-all relative group"
                           style={{ height: `${height}%` }}
@@ -385,8 +405,21 @@ export default function AnalyticsPage() {
                 <h2 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
                   <Shield className="w-5 h-5" />
                   Request Logs
+                  <span className="text-sm font-normal text-gray-500">
+                    ({filteredLogs.length} total)
+                  </span>
                 </h2>
                 <div className="flex items-center gap-3">
+                  <select
+                    value={itemsPerPage}
+                    onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none text-sm"
+                  >
+                    <option value={25}>25 per page</option>
+                    <option value={50}>50 per page</option>
+                    <option value={100}>100 per page</option>
+                    <option value={200}>200 per page</option>
+                  </select>
                   <input
                     type="text"
                     placeholder="Filter by IP..."
@@ -431,7 +464,7 @@ export default function AnalyticsPage() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200">
-                    {filteredLogs.slice(0, 100).map((log) => (
+                    {paginatedLogs.map((log) => (
                       <tr key={log._id} className="hover:bg-gray-50">
                         <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                           {new Date(log.timestamp).toLocaleString()}
@@ -445,10 +478,10 @@ export default function AnalyticsPage() {
                               log.method === 'GET'
                                 ? 'bg-blue-100 text-blue-700'
                                 : log.method === 'POST'
-                                ? 'bg-green-100 text-green-700'
-                                : log.method === 'PUT'
-                                ? 'bg-yellow-100 text-yellow-700'
-                                : 'bg-red-100 text-red-700'
+                                  ? 'bg-green-100 text-green-700'
+                                  : log.method === 'PUT'
+                                    ? 'bg-yellow-100 text-yellow-700'
+                                    : 'bg-red-100 text-red-700'
                             }`}
                           >
                             {log.method}
@@ -464,10 +497,10 @@ export default function AnalyticsPage() {
                                 log.status < 300
                                   ? 'bg-green-100 text-green-700'
                                   : log.status < 400
-                                  ? 'bg-blue-100 text-blue-700'
-                                  : log.status < 500
-                                  ? 'bg-yellow-100 text-yellow-700'
-                                  : 'bg-red-100 text-red-700'
+                                    ? 'bg-blue-100 text-blue-700'
+                                    : log.status < 500
+                                      ? 'bg-yellow-100 text-yellow-700'
+                                      : 'bg-red-100 text-red-700'
                               }`}
                             >
                               {log.status}
@@ -483,9 +516,71 @@ export default function AnalyticsPage() {
                 </table>
               </div>
 
-              {filteredLogs.length > 100 && (
-                <div className="mt-4 text-center text-sm text-gray-500">
-                  Showing first 100 of {filteredLogs.length} logs
+              {/* Pagination Controls */}
+              {filteredLogs.length > 0 && (
+                <div className="mt-6 flex items-center justify-between border-t border-gray-200 pt-4">
+                  <div className="text-sm text-gray-600">
+                    Showing {startIndex + 1} to{' '}
+                    {Math.min(endIndex, filteredLogs.length)} of{' '}
+                    {filteredLogs.length} logs
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(1, prev - 1))
+                      }
+                      disabled={currentPage === 1}
+                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      Previous
+                    </button>
+
+                    <div className="flex items-center gap-1">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1)
+                        .filter((page) => {
+                          // Show first page, last page, current page, and pages around current
+                          if (page === 1 || page === totalPages) return true;
+                          if (Math.abs(page - currentPage) <= 1) return true;
+                          return false;
+                        })
+                        .map((page, index, array) => {
+                          // Add ellipsis between non-consecutive pages
+                          const prevPage = array[index - 1];
+                          const showEllipsis = prevPage && page - prevPage > 1;
+
+                          return (
+                            <div key={page} className="flex items-center gap-1">
+                              {showEllipsis && (
+                                <span className="px-2 text-gray-400">...</span>
+                              )}
+                              <button
+                                onClick={() => setCurrentPage(page)}
+                                className={`px-3 py-2 text-sm font-medium rounded-lg transition ${
+                                  currentPage === page
+                                    ? 'bg-ocean-600 text-white'
+                                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+                                }`}
+                              >
+                                {page}
+                              </button>
+                            </div>
+                          );
+                        })}
+                    </div>
+
+                    <button
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                      }
+                      disabled={currentPage === totalPages}
+                      className="flex items-center gap-1 px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+                    >
+                      Next
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -508,7 +603,11 @@ function StatCard({ icon, title, value, color, subtitle }: any) {
     <div className="bg-white rounded-lg shadow-sm p-6">
       <div className="flex items-center justify-between mb-2">
         <p className="text-sm font-medium text-gray-600">{title}</p>
-        <div className={`p-2 rounded-lg ${colors[color as keyof typeof colors]}`}>{icon}</div>
+        <div
+          className={`p-2 rounded-lg ${colors[color as keyof typeof colors]}`}
+        >
+          {icon}
+        </div>
       </div>
       <p className="text-3xl font-bold text-gray-900">{value}</p>
       {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
