@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+@layer base {
+  :root {
+    --ocean-primary: 0 135 175;
+    --gold-primary: 212 175 55;
+    --brown-primary: 139 115 85;
+  }
+
+  * {
+    @apply border-gray-200;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    @apply bg-gradient-to-b from-slate-50 to-slate-100 text-gray-900;
+    font-family: var(--font-heebo), -apple-system, BlinkMacSystemFont,
+      'Segoe UI', sans-serif;
+    direction: rtl;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display), -apple-system, BlinkMacSystemFont,
+      sans-serif;
+    font-weight: 700;
+  }
+}
+
+@layer components {
+  .luxury-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 135, 175, 0.1) 0%,
+      rgba(212, 175, 55, 0.05) 50%,
+      rgba(139, 115, 85, 0.1) 100%
+    );
+  }
+
+  .glass-effect {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-ocean-500 via-gold-500 to-brown-500 bg-clip-text text-transparent;
+  }
+
+  .btn-primary {
+    @apply bg-ocean-500 hover:bg-ocean-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+  }
+
+  .btn-secondary {
+    @apply bg-gold-500 hover:bg-gold-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-2xl hover:-translate-y-2;
+  }
+
+  .parallax-section {
+    @apply relative bg-fixed bg-center bg-cover;
+  }
+
+  .section-padding {
+    @apply py-20 px-4 md:px-8 lg:px-16;
+  }
+
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+
+  .animation-delay-600 {
+    animation-delay: 0.6s;
+  }
+
+  .animation-delay-800 {
+    animation-delay: 0.8s;
+  }
+
+  .text-shadow-sm {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-slate-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-ocean-500 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-ocean-600;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Accessibility Styles */
+.high-contrast {
+  filter: contrast(1.5);
+}
+
+.high-contrast * {
+  border-color: #000 !important;
+}
+
+.invert-colors {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.invert-colors img,
+.invert-colors video {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+.grayscale {
+  filter: grayscale(1);
+}
+
+.highlight-links a {
+  background-color: yellow !important;
+  color: #000 !important;
+  text-decoration: underline !important;
+  padding: 2px 4px !important;
+  font-weight: bold !important;
+}
+
+.readable-font,
+.readable-font * {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+
+.large-cursor,
+.large-cursor * {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" style="font-size: 32px;"><text y="24">👆</text></svg>'),
+    auto !important;
+}
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 3px solid #0087af !important;
+  outline-offset: 2px !important;
+}
+
+/* Prevent scroll behavior in accessibility widget */
+#accessibility-widget,
+#accessibility-widget * {
+  scroll-margin: 0 !important;
+  scroll-padding: 0 !important;
+}
+
+#accessibility-widget input:focus,
+#accessibility-widget button:focus {
+  scroll-behavior: auto !important;
+}
+
+/* Skip to main content link */
+.skip-to-content {
+  position: absolute;
+  right: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: #000;
+  color: white;
+  text-decoration: none;
+}
+
+.skip-to-content:focus {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1em;
+}

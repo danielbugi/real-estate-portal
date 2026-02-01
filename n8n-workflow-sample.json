@@ -1,0 +1,106 @@
+{
+  "name": "Cyprus Real Estate Content Automation",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "functionCode": "// Generate mock property data\nconst cities = [\n  { name: 'Limassol', nameHe: 'לימסול', coords: [34.707817, 33.022469] },\n  { name: 'Paphos', nameHe: 'פאפוס', coords: [34.755291, 32.408562] },\n  { name: 'Larnaca', nameHe: 'לרנקה', coords: [34.916641, 33.629456] },\n  { name: 'Nicosia', nameHe: 'ניקוסיה', coords: [35.185566, 33.382869] }\n];\n\nconst propertyTypes = [\n  { type: 'villa', typeHe: 'וילה' },\n  { type: 'apartment', typeHe: 'דירה' },\n  { type: 'penthouse', typeHe: 'פנטהאוז' }\n];\n\nconst randomCity = cities[Math.floor(Math.random() * cities.length)];\nconst randomType = propertyTypes[Math.floor(Math.random() * propertyTypes.length)];\nconst basePrice = Math.floor(Math.random() * 500000) + 150000;\n\nconst property = {\n  type: 'property',\n  content: {\n    title: `${randomType.type.charAt(0).toUpperCase() + randomType.type.slice(1)} in ${randomCity.name}`,\n    titleHe: `${randomType.typeHe} ב${randomCity.nameHe}`,\n    price: basePrice,\n    priceILS: basePrice * 3.75,\n    location: {\n      city: randomCity.name,\n      cityHe: randomCity.nameHe,\n      area: 'Prime Location',\n      areaHe: 'מיקום מרכזי',\n      coordinates: randomCity.coords\n    },\n    features: {\n      bedrooms: Math.floor(Math.random() * 3) + 2,\n      bathrooms: Math.floor(Math.random() * 2) + 1,\n      sqm: Math.floor(Math.random() * 150) + 100,\n      pool: Math.random() > 0.5,\n      seaview: Math.random() > 0.6,\n      parking: true\n    },\n    description: `Beautiful ${randomType.type} in ${randomCity.name} with modern amenities and excellent investment potential.`,\n    descriptionHe: `${randomType.typeHe} מהמם ב${randomCity.nameHe} עם שירותים מודרניים ופוטנציאל השקעה מצוין.`,\n    images: [\n      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750',\n      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9'\n    ],\n    roi: {\n      rentalYield: (Math.random() * 4 + 4).toFixed(1),\n      appreciation: (Math.random() * 5 + 5).toFixed(1)\n    },\n    propertyType: randomType.type,\n    propertyTypeHe: randomType.typeHe,\n    slug: `${randomType.type}-${randomCity.name.toLowerCase()}-${Date.now()}`\n  }\n};\n\nreturn [{ json: property }];"
+      },
+      "name": "Generate Property Data",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://your-domain.vercel.app/api/content",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-webhook-secret",
+              "value": "=YOUR_WEBHOOK_SECRET_HERE"
+            }
+          ]
+        },
+        "options": {},
+        "bodyParametersJson": "={{ $json }}"
+      },
+      "name": "POST to Website",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "=✅ New property added to website!\\n\\nTitle: {{ $node['Generate Property Data'].json['content']['titleHe'] }}\\nPrice: €{{ $node['Generate Property Data'].json['content']['price'] }}\\nLocation: {{ $node['Generate Property Data'].json['content']['location']['cityHe'] }}"
+      },
+      "name": "Telegram Notification",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1,
+      "position": [850, 300],
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Generate Property Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Property Data": {
+      "main": [
+        [
+          {
+            "node": "POST to Website",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "POST to Website": {
+      "main": [
+        [
+          {
+            "node": "Telegram Notification",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": []
+}
