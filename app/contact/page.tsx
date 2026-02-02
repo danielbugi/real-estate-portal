@@ -1,8 +1,12 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, Clock, Send } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
+
+// Note: Metadata export doesn't work with 'use client' - will need to move to parent or use next/head
+// For now, SEO is handled by the root layout
 
 export default function ContactPage() {
   return (

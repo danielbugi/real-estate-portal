@@ -26,6 +26,8 @@ export default function ContactForm() {
         body: JSON.stringify(formData),
       });
 
+      const result = await response.json();
+
       if (response.ok) {
         setIsSuccess(true);
         setFormData({
@@ -36,9 +38,13 @@ export default function ContactForm() {
           message: '',
         });
         setTimeout(() => setIsSuccess(false), 5000);
+      } else {
+        // Show error message to user
+        alert(result.error || 'שגיאה בשליחת הטופס. אנא נסה שוב.');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      alert('שגיאה בשליחת הטופס. אנא בדוק את החיבור לאינטרנט ונסה שוב.');
     } finally {
       setIsSubmitting(false);
     }
@@ -49,9 +55,39 @@ export default function ContactForm() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
+    const { name, value } = e.target;
+
+    // Client-side sanitization and validation
+    let sanitizedValue = value;
+
+    // Prevent HTML/Script injection in all fields
+    if (typeof value === 'string') {
+      // Remove dangerous patterns
+      sanitizedValue = value
+        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+        .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '')
+        .replace(/javascript:/gi, '')
+        .replace(/on\w+\s*=/gi, '');
+
+      // Field-specific validation
+      if (name === 'name') {
+        // Max 100 characters for name
+        sanitizedValue = sanitizedValue.substring(0, 100);
+      } else if (name === 'email') {
+        // Email: lowercase, no spaces, max 254 chars
+        sanitizedValue = sanitizedValue.toLowerCase().trim().substring(0, 254);
+      } else if (name === 'phone') {
+        // Phone: max 20 characters
+        sanitizedValue = sanitizedValue.substring(0, 20);
+      } else if (name === 'message') {
+        // Message: max 2000 characters
+        sanitizedValue = sanitizedValue.substring(0, 2000);
+      }
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value,
+      [name]: sanitizedValue,
     }));
   };
 
@@ -91,6 +127,10 @@ export default function ContactForm() {
           value={formData.name}
           onChange={handleChange}
           required
+          minLength={2}
+          maxLength={100}
+          pattern="[^<>]*"
+          title="Name cannot contain < or > characters"
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
           placeholder="הכנס את שמך המלא"
         />
@@ -107,6 +147,9 @@ export default function ContactForm() {
           value={formData.email}
           onChange={handleChange}
           required
+          maxLength={254}
+          pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          title="Please enter a valid email address"
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
           placeholder="your@email.com"
         />
@@ -123,6 +166,9 @@ export default function ContactForm() {
           value={formData.phone}
           onChange={handleChange}
           required
+          maxLength={20}
+          pattern="[0-9+\-\s()]+"
+          title="Please enter a valid phone number"
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
           placeholder="050-1234567"
         />
@@ -158,6 +204,7 @@ export default function ContactForm() {
           value={formData.message}
           onChange={handleChange}
           rows={4}
+          maxLength={2000}
           className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none resize-none"
           placeholder="ספר לנו על מה אתה מחפש..."
         />

@@ -10,7 +10,7 @@ import { updateArticleStatus, saveLog } from '@/lib/db-admin';
 // POST approve/reject article
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = requireAuth(request);
@@ -24,6 +24,8 @@ export async function POST(
       return auth.response!;
     }
 
+    const { id } = await params;
+
     const rawBody = await request.json();
     const body = sanitizeInput(rawBody);
 
@@ -33,12 +35,12 @@ export async function POST(
     if (!['pending', 'approved', 'rejected'].includes(status)) {
       return NextResponse.json(
         { error: 'Invalid status. Must be: pending, approved, or rejected' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     // Update article status
-    const result = await updateArticleStatus(params.id, status);
+    const result = await updateArticleStatus(id, status);
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -47,7 +49,7 @@ export async function POST(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: params.id, newStatus: status },
+      body: { articleId: id, newStatus: status },
     });
     await saveLog(logEntry);
 
@@ -69,7 +71,7 @@ export async function POST(
 
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

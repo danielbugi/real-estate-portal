@@ -1,5 +1,6 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { motion } from 'framer-motion';
 import {
   Building2,
@@ -13,6 +14,10 @@ import {
 } from 'lucide-react';
 import StatsSection from '@/components/StatsSection';
 import CTAWithForm from '@/components/CTAWithForm';
+
+// Note: Metadata export doesn't work with 'use client' - will need to move to parent or use next/head
+// For now, SEO is handled by the root layout
+// export const metadata: Metadata = {...};
 
 export default function AboutPage() {
   return (

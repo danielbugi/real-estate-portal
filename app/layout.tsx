@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import AccessibilityWidget from '@/components/AccessibilityWidget';
 import { AccessibilityWrapper } from '@/components/AccessibilityWrapper';
+import { generateOrganizationSchema } from '@/lib/structured-data';
 
 const heebo = Heebo({
   subsets: ['hebrew', 'latin'],
@@ -20,12 +21,76 @@ const assistant = Assistant({
   display: 'swap',
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
+
 export const metadata: Metadata = {
-  title: 'Cyprus Insights – פורטל המידע וההשקעות של ישראל',
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: 'Cyprus Insights – פורטל המידע וההשקעות של ישראל',
+    template: '%s | Cyprus Insights',
+  },
   description:
-    'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים. וילות, פנטהאוזים ודירות עם תשואה גבוהה',
-  keywords:
-    'נדלן קפריסין, השקעות קפריסין, נכסים בקפריסין, Cyprus real estate, property Cyprus',
+    'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים. וילות, פנטהאוזים ודירות עם תשואה גבוהה. מדריכים מקצועיים, ניתוח שוק ונכסים מובחרים',
+  keywords: [
+    'נדלן קפריסין',
+    'השקעות קפריסין',
+    'נכסים בקפריסין',
+    'וילות קפריסין',
+    'דירות בקפריסין',
+    'Cyprus real estate',
+    'property Cyprus',
+    'Cyprus investment',
+    'נדלן בחול',
+    'השקעות נדלן',
+    'real estate abroad',
+  ],
+  authors: [{ name: 'Cyprus Insights' }],
+  creator: 'Cyprus Insights',
+  publisher: 'Cyprus Insights',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    locale: 'he_IL',
+    url: siteUrl,
+    siteName: 'Cyprus Insights',
+    title: 'Cyprus Insights – פורטל המידע וההשקעות של ישראל',
+    description:
+      'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים. וילות, פנטהאוזים ודירות עם תשואה גבוהה',
+    images: [
+      {
+        url: `${siteUrl}/og-image.jpg`,
+        width: 1200,
+        height: 630,
+        alt: 'Cyprus Insights - נדלן יוקרתי בקפריסין',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Cyprus Insights – פורטל המידע וההשקעות של ישראל',
+    description: 'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים',
+    images: [`${siteUrl}/og-image.jpg`],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  icons: {
+    icon: '/favicon.svg',
+    apple: '/apple-icon.png',
+  },
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
@@ -33,8 +98,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const organizationSchema = generateOrganizationSchema();
+
   return (
     <html lang="he" dir="rtl">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+      </head>
       <body className={`${heebo.variable} ${assistant.variable} font-sans`}>
         <a href="#main-content" className="skip-to-content">
           דלג לתוכן הראשי

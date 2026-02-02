@@ -15,7 +15,7 @@ import {
 // GET single article
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = requireAuth(request);
@@ -23,7 +23,8 @@ export async function GET(
       return auth.response!;
     }
 
-    const article = await getArticleById(params.id);
+    const { id } = await params;
+    const article = await getArticleById(id);
 
     if (!article) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -46,7 +47,7 @@ export async function GET(
 
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -54,7 +55,7 @@ export async function GET(
 // UPDATE article
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = requireAuth(request);
@@ -75,11 +76,12 @@ export async function PUT(
     if (Object.keys(updates).length === 0) {
       return NextResponse.json(
         { error: 'No updates provided' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const result = await updateArticle(params.id, updates);
+    const { id } = await params;
+    const result = await updateArticle(id, updates);
 
     if (result.matchedCount === 0) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -88,7 +90,7 @@ export async function PUT(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: params.id, updates: Object.keys(updates) },
+      body: { articleId: id, updates: Object.keys(updates) },
     });
     await saveLog(logEntry);
 
@@ -110,7 +112,7 @@ export async function PUT(
 
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -118,7 +120,7 @@ export async function PUT(
 // DELETE article
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const auth = requireAuth(request);
@@ -132,7 +134,8 @@ export async function DELETE(
       return auth.response!;
     }
 
-    const result = await deleteArticle(params.id);
+    const { id } = await params;
+    const result = await deleteArticle(id);
 
     if (result.deletedCount === 0) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -141,7 +144,7 @@ export async function DELETE(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: params.id, action: 'delete' },
+      body: { articleId: id, action: 'delete' },
     });
     await saveLog(logEntry);
 
@@ -162,7 +165,7 @@ export async function DELETE(
 
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

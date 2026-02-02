@@ -19,6 +19,10 @@ import {
 } from 'lucide-react';
 import { Article } from '@/types';
 import CTAWithForm from './CTAWithForm';
+import {
+  generateArticleSchema,
+  generateBreadcrumbSchema,
+} from '@/lib/structured-data';
 
 interface SingleArticlePageProps {
   slug: string;
@@ -120,13 +124,39 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
     return null;
   }
 
+  // Generate structured data
+  const articleSchema = generateArticleSchema(article);
+  const breadcrumbSchema = generateBreadcrumbSchema([
+    { name: 'ראשי', url: '/' },
+    { name: 'מאמרים', url: '/articles' },
+    {
+      name: article.titleHe || article.title,
+      url: `/articles/${article.slug}`,
+    },
+  ]);
+
   return (
-    <div
-      className=" min-h-screen bg-gradient-to-b from-slate-50 to-white pt-12"
-      dir="rtl"
-    >
-      {/* Back Navigation */}
-      {/* <div className="bg-white border-b border-gray-200  top-0 z-40 shadow-sm">
+    <>
+      {/* Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(articleSchema),
+        }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbSchema),
+        }}
+      />
+
+      <div
+        className=" min-h-screen bg-gradient-to-b from-slate-50 to-white pt-12"
+        dir="rtl"
+      >
+        {/* Back Navigation */}
+        {/* <div className="bg-white border-b border-gray-200  top-0 z-40 shadow-sm">
         <div className="container-custom py-4">
           <button
             onClick={() => router.push('/articles')}
@@ -138,147 +168,148 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
         </div>
       </div> */}
 
-      {/* Article Content */}
-      <article className="section-padding">
-        <div className="container-custom">
-          <button
-            onClick={() => router.push('/articles')}
-            className="flex items-center gap-2 text-ocean-600 hover:text-ocean-700 transition group"
-          >
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            <span className="font-medium">חזרה לכל המאמרים</span>
-          </button>
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main Content - 2 columns */}
-            <div className="lg:col-span-2">
-              {/* Featured Image */}
-              {article.featuredImageUrl && (
+        {/* Article Content */}
+        <article className="section-padding">
+          <div className="container-custom">
+            <button
+              onClick={() => router.push('/articles')}
+              className="flex items-center gap-2 text-ocean-600 hover:text-ocean-700 transition group"
+            >
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <span className="font-medium">חזרה לכל המאמרים</span>
+            </button>
+            <div className="grid lg:grid-cols-3 gap-8">
+              {/* Main Content - 2 columns */}
+              <div className="lg:col-span-2">
+                {/* Featured Image */}
+                {article.featuredImageUrl && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="mb-8"
+                  >
+                    <img
+                      src={article.featuredImageUrl}
+                      alt={article.titleHe || article.title}
+                      className="w-full h-[400px] object-cover rounded-2xl shadow-xl"
+                    />
+                  </motion.div>
+                )}
+
+                {/* Title */}
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
+                >
+                  {article.titleHe || article.title}
+                </motion.h1>
+
+                {/* Meta Info */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-8"
+                  transition={{ delay: 0.2 }}
+                  className="flex flex-wrap items-center gap-4 text-gray-600 mb-8 pb-8 border-b-2 border-gray-200"
                 >
-                  <img
-                    src={article.featuredImageUrl}
-                    alt={article.titleHe || article.title}
-                    className="w-full h-[400px] object-cover rounded-2xl shadow-xl"
-                  />
-                </motion.div>
-              )}
-
-              {/* Title */}
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 }}
-                className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 leading-tight"
-              >
-                {article.titleHe || article.title}
-              </motion.h1>
-
-              {/* Meta Info */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex flex-wrap items-center gap-4 text-gray-600 mb-8 pb-8 border-b-2 border-gray-200"
-              >
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-5 h-5 text-ocean-600" />
-                  <span className="font-medium">
-                    {new Date(article.createdAt).toLocaleDateString('he-IL', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                    })}
-                  </span>
-                </div>
-                {article.readTime && (
                   <div className="flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-ocean-600" />
+                    <Calendar className="w-5 h-5 text-ocean-600" />
                     <span className="font-medium">
-                      {article.readTime} דקות קריאה
+                      {new Date(article.createdAt).toLocaleDateString('he-IL', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
                     </span>
                   </div>
-                )}
-                <button
-                  onClick={handleShare}
-                  className="flex items-center gap-2 mr-auto text-ocean-600 hover:text-ocean-700 transition"
-                >
-                  <Share2 className="w-5 h-5" />
-                  <span className="font-medium">שתף</span>
-                </button>
-              </motion.div>
+                  {article.readTime && (
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-5 h-5 text-ocean-600" />
+                      <span className="font-medium">
+                        {article.readTime} דקות קריאה
+                      </span>
+                    </div>
+                  )}
+                  <button
+                    onClick={handleShare}
+                    className="flex items-center gap-2 mr-auto text-ocean-600 hover:text-ocean-700 transition"
+                  >
+                    <Share2 className="w-5 h-5" />
+                    <span className="font-medium">שתף</span>
+                  </button>
+                </motion.div>
 
-              {/* Keywords/Tags */}
-              {article.keywords && article.keywords.length > 0 && (
+                {/* Keywords/Tags */}
+                {article.keywords && article.keywords.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    className="flex flex-wrap gap-2 mb-8"
+                  >
+                    <Tag className="w-5 h-5 text-gray-400" />
+                    {article.keywords.map((keyword) => (
+                      <span
+                        key={keyword}
+                        className="px-4 py-2 bg-ocean-100 text-ocean-700 rounded-full text-sm font-medium hover:bg-ocean-200 transition"
+                      >
+                        {keyword}
+                      </span>
+                    ))}
+                  </motion.div>
+                )}
+
+                {/* Article Content */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="flex flex-wrap gap-2 mb-8"
-                >
-                  <Tag className="w-5 h-5 text-gray-400" />
-                  {article.keywords.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="px-4 py-2 bg-ocean-100 text-ocean-700 rounded-full text-sm font-medium hover:bg-ocean-200 transition"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
-                </motion.div>
-              )}
-
-              {/* Article Content */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="article-content mb-12"
-                dangerouslySetInnerHTML={{
-                  __html: article.contentHtml || article.content || '',
-                }}
-              />
-
-              {/* Bottom CTA - Mobile Only */}
-              <div className="lg:hidden">
-                <BottomCTA onClick={() => setShowLeadForm(true)} />
-              </div>
-            </div>
-
-            {/* Sidebar - 1 column - Desktop Only */}
-            <div className="hidden lg:block">
-              <div className="sticky top-24">
-                <LeadFormSidebar
-                  formData={leadForm}
-                  setFormData={setLeadForm}
-                  onSubmit={handleLeadSubmit}
-                  submitted={formSubmitted}
+                  transition={{ delay: 0.4 }}
+                  className="article-content mb-12"
+                  dangerouslySetInnerHTML={{
+                    __html: article.contentHtml || article.content || '',
+                  }}
                 />
+
+                {/* Bottom CTA - Mobile Only */}
+                <div className="lg:hidden">
+                  <BottomCTA onClick={() => setShowLeadForm(true)} />
+                </div>
+              </div>
+
+              {/* Sidebar - 1 column - Desktop Only */}
+              <div className="hidden lg:block">
+                <div className="sticky top-24">
+                  <LeadFormSidebar
+                    formData={leadForm}
+                    setFormData={setLeadForm}
+                    onSubmit={handleLeadSubmit}
+                    submitted={formSubmitted}
+                  />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="container-custom mt-16">
-          <CTAWithForm
-            title="מתעניינים בהזדמנויות השקעה בקפריסין?"
-            subtitle="השאירו פרטים ונחזור אליכם עם מידע מפורט"
-          />
-        </div>
-      </article>
+          <div className="container-custom mt-16">
+            <CTAWithForm
+              title="מתעניינים בהזדמנויות השקעה בקפריסין?"
+              subtitle="השאירו פרטים ונחזור אליכם עם מידע מפורט"
+            />
+          </div>
+        </article>
 
-      {/* Lead Form Modal - Mobile */}
-      {showLeadForm && (
-        <LeadFormModal
-          formData={leadForm}
-          setFormData={setLeadForm}
-          onSubmit={handleLeadSubmit}
-          onClose={() => setShowLeadForm(false)}
-          submitted={formSubmitted}
-        />
-      )}
-    </div>
+        {/* Lead Form Modal - Mobile */}
+        {showLeadForm && (
+          <LeadFormModal
+            formData={leadForm}
+            setFormData={setLeadForm}
+            onSubmit={handleLeadSubmit}
+            onClose={() => setShowLeadForm(false)}
+            submitted={formSubmitted}
+          />
+        )}
+      </div>
+    </>
   );
 }
 

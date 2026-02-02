@@ -75,7 +75,7 @@ export function checkRateLimit(identifier: string): {
 setInterval(
   () => {
     const now = Date.now();
-    for (const [key, value] of rateLimitStore.entries()) {
+    for (const [key, value] of Array.from(rateLimitStore.entries())) {
       if (
         value.resetTime < now &&
         (!value.blockedUntil || value.blockedUntil < now)
@@ -93,12 +93,32 @@ setInterval(
 
 export function sanitizeInput(input: any): any {
   if (typeof input === 'string') {
-    // Remove potential XSS attempts
-    return input
-      .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-      .replace(/javascript:/gi, '')
-      .replace(/on\w+\s*=/gi, '')
-      .trim();
+    // Remove potential XSS attempts - comprehensive protection
+    return (
+      input
+        // Remove script tags
+        .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+        // Remove iframe tags
+        .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
+        // Remove object/embed tags
+        .replace(/<object\b[^<]*(?:(?!<\/object>)<[^<]*)*<\/object>/gi, '')
+        .replace(/<embed[^>]*>/gi, '')
+        // Remove javascript: protocol
+        .replace(/javascript:/gi, '')
+        // Remove data: protocol (can be used for XSS)
+        .replace(/data:text\/html/gi, '')
+        // Remove vbscript: protocol
+        .replace(/vbscript:/gi, '')
+        // Remove event handlers
+        .replace(/on\w+\s*=/gi, '')
+        // Remove style tags
+        .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
+        // Remove meta tags
+        .replace(/<meta[^>]*>/gi, '')
+        // Remove link tags
+        .replace(/<link[^>]*>/gi, '')
+        .trim()
+    );
   }
 
   if (Array.isArray(input)) {
@@ -112,12 +132,29 @@ export function sanitizeInput(input: any): any {
       if (key.startsWith('$') || key.includes('.')) {
         continue; // Skip dangerous keys
       }
+      // Prevent prototype pollution
+      if (key === '__proto__' || key === 'constructor' || key === 'prototype') {
+        continue;
+      }
       sanitized[key] = sanitizeInput(value);
     }
     return sanitized;
   }
 
   return input;
+}
+
+// HTML entity encoding for display (additional XSS protection)
+export function escapeHtml(text: string): string {
+  const htmlEntities: { [key: string]: string } = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    '/': '&#x2F;',
+  };
+  return text.replace(/[&<>"'\/]/g, (char) => htmlEntities[char]);
 }
 
 // ============================================
@@ -215,7 +252,6 @@ export function createLogEntry(
     request.headers.get('x-real-ip') ||
     request.headers.get('cf-connecting-ip') || // Cloudflare
     request.headers.get('x-client-ip') ||
-    request.ip || // Next.js may populate this
     'unknown';
 
   // Normalize IPv6 localhost to IPv4
@@ -292,3 +328,6 @@ export function requireAuth(request: NextRequest): {
     userId: payload.userId,
   };
 }
+
+// Alias for consistency
+export const verifyAuth = requireAuth;

@@ -1,5 +1,6 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
@@ -13,6 +14,9 @@ import {
 import PropertyCard from '@/components/PropertyCard';
 import CTAWithForm from '@/components/CTAWithForm';
 import { Property } from '@/types';
+
+// Note: Metadata export doesn't work with 'use client' - will need to move to parent or use next/head
+// For now, SEO is handled by the root layout
 
 export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>([]);

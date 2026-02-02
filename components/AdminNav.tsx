@@ -10,6 +10,7 @@ import {
   LogOut,
   Menu,
   X,
+  User,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -38,6 +39,11 @@ export default function AdminNav() {
       name: 'Analytics',
       href: '/admin/analytics',
       icon: Activity,
+    },
+    {
+      name: 'Leads',
+      href: '/admin/leads',
+      icon: User,
     },
   ];
 

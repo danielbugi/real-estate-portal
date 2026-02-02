@@ -70,6 +70,9 @@ export interface Lead {
   interestedIn?: string[];
   createdAt: Date;
   source: string;
+  status?: 'new' | 'contacted' | 'qualified' | 'closed';
+  ipAddress?: string;
+  userAgent?: string;
 }
 
 export interface AdminUser {
