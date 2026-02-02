@@ -63,7 +63,9 @@ export default function AdminDashboardPage() {
       setIsLoading(true);
 
       // Fetch stats
-      const statsRes = await fetch('/api/admin/stats');
+      const statsRes = await fetch('/api/admin/stats', {
+        credentials: 'include',
+      });
       if (statsRes.status === 401) {
         router.push('/admin');
         return;
@@ -73,7 +75,8 @@ export default function AdminDashboardPage() {
 
       // Fetch articles
       const articlesRes = await fetch(
-        `/api/admin/articles?status=${filter}&limit=100`
+        `/api/admin/articles?status=${filter}&limit=100`,
+        { credentials: 'include' },
       );
       const articlesData = await articlesRes.json();
       setArticles(articlesData.articles || []);
@@ -129,7 +132,7 @@ export default function AdminDashboardPage() {
   const handleDelete = async (articleId: string) => {
     if (
       !confirm(
-        'Are you sure you want to delete this article? This cannot be undone.'
+        'Are you sure you want to delete this article? This cannot be undone.',
       )
     ) {
       return;
@@ -156,7 +159,7 @@ export default function AdminDashboardPage() {
   const filteredArticles = articles.filter(
     (article) =>
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      article.titleHe.includes(searchTerm)
+      article.titleHe.includes(searchTerm),
   );
 
   return (

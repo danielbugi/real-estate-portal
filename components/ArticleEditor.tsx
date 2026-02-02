@@ -67,7 +67,9 @@ export default function ArticleEditor({
   const loadArticle = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/admin/articles/${articleId}`);
+      const res = await fetch(`/api/admin/articles/${articleId}`, {
+        credentials: 'include',
+      });
       const data = await res.json();
       if (data.success) {
         setFormData(data.article);
@@ -138,6 +140,7 @@ export default function ArticleEditor({
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(dataToSave),
       });
 

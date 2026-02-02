@@ -86,7 +86,9 @@ export default function AnalyticsPage() {
         startDate: startDate.toISOString(),
       });
 
-      const res = await fetch(`/api/admin/logs?${params}`);
+      const res = await fetch(`/api/admin/logs?${params}`, {
+        credentials: 'include',
+      });
 
       if (res.status === 401) {
         router.push('/admin');

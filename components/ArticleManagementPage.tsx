@@ -57,7 +57,9 @@ export default function ArticleManagementPage() {
   const fetchArticles = async () => {
     setIsLoading(true);
     try {
-      const res = await fetch('/api/admin/articles?limit=100');
+      const res = await fetch('/api/admin/articles?limit=100', {
+        credentials: 'include',
+      });
       if (res.status === 401) {
         router.push('/admin');
         return;
@@ -120,6 +122,7 @@ export default function ArticleManagementPage() {
     try {
       const res = await fetch(`/api/admin/articles/${articleId}`, {
         method: 'DELETE',
+        credentials: 'include',
       });
 
       if (res.ok) {
@@ -141,6 +144,7 @@ export default function ArticleManagementPage() {
       const res = await fetch(`/api/admin/articles/${articleId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ published: !currentlyPublished }),
       });
 

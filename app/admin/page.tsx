@@ -24,6 +24,7 @@ export default function AdminLoginPage() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       });
 
@@ -32,7 +33,7 @@ export default function AdminLoginPage() {
       if (!response.ok) {
         if (response.status === 429) {
           setError(
-            data.message || 'Too many login attempts. Please try again later.'
+            data.message || 'Too many login attempts. Please try again later.',
           );
         } else {
           setError(data.error || 'Login failed');

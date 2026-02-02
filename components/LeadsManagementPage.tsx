@@ -30,6 +30,7 @@ export default function LeadsManagementPage() {
 
       const response = await fetch(
         `/api/leads?limit=50&skip=${skip}${sourceParam}`,
+        { credentials: 'include' },
       );
 
       if (response.ok) {

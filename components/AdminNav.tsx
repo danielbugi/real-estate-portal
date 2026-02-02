@@ -48,7 +48,10 @@ export default function AdminNav() {
   ];
 
   const handleLogout = async () => {
-    await fetch('/api/admin/auth/logout', { method: 'POST' });
+    await fetch('/api/admin/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
     router.push('/admin');
   };
 

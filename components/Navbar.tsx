@@ -25,7 +25,9 @@ export default function Navbar() {
   useEffect(() => {
     const checkAdminAuth = async () => {
       try {
-        const res = await fetch('/api/admin/stats');
+        const res = await fetch('/api/admin/stats', {
+          credentials: 'include',
+        });
         setIsAdmin(res.ok);
       } catch {
         setIsAdmin(false);
@@ -35,7 +37,10 @@ export default function Navbar() {
   }, []);
 
   const handleLogout = async () => {
-    await fetch('/api/admin/auth/logout', { method: 'POST' });
+    await fetch('/api/admin/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
     setIsAdmin(false);
     router.push('/admin');
   };
