@@ -49,7 +49,6 @@ export async function POST(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: id, newStatus: status },
     });
     await saveLog(logEntry);
 

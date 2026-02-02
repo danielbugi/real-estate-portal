@@ -90,7 +90,6 @@ export async function PUT(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: id, updates: Object.keys(updates) },
     });
     await saveLog(logEntry);
 
@@ -144,7 +143,6 @@ export async function DELETE(
     const logEntry = createLogEntry(request, {
       status: 200,
       userId: auth.userId,
-      body: { articleId: id, action: 'delete' },
     });
     await saveLog(logEntry);
 

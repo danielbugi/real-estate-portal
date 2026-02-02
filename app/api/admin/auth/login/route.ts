@@ -63,6 +63,7 @@ export async function POST(request: NextRequest) {
     const user = await getAdminUser(username);
 
     if (!user) {
+      console.log(`Login failed: User "${username}" not found in database`);
       const logEntry = createLogEntry(request, {
         status: 401,
         error: 'Invalid username',
@@ -76,10 +77,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(`User "${username}" found, verifying password...`);
     // Verify password
     const passwordValid = verifyPassword(password, user.passwordHash);
 
     if (!passwordValid) {
+      console.log(`Login failed: Invalid password for user "${username}"`);
       const logEntry = createLogEntry(request, {
         status: 401,
         error: 'Invalid password',
@@ -93,6 +96,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    console.log(`Login successful for user "${username}"`);
     // Update last login
     await updateLastLogin(username);
 
