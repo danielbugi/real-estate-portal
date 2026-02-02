@@ -28,17 +28,17 @@ export default function StatsSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3 sm:mb-4">
             המספרים מדברים בעד עצמם
           </h2>
-          <p className="text-xl text-white/80">
+          <p className="text-base sm:text-lg md:text-xl text-white/80">
             נתונים אמיתיים משוק הנדל״ן בקפריסין 2024-2025
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {stats.map((stat, idx) => (
             <motion.div
               key={idx}
@@ -48,13 +48,15 @@ export default function StatsSection() {
               transition={{ delay: idx * 0.1 }}
               className="text-center"
             >
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20">
+              <div className="bg-white/10 backdrop-blur-md rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 border border-white/20">
                 <AnimatedCounter
                   end={stat.value}
                   suffix={stat.suffix}
                   isInView={isInView}
                 />
-                <p className="text-white/80 mt-4">{stat.label}</p>
+                <p className="text-white/80 mt-2 sm:mt-3 md:mt-4 text-xs sm:text-sm md:text-base">
+                  {stat.label}
+                </p>
               </div>
             </motion.div>
           ))}
@@ -64,7 +66,15 @@ export default function StatsSection() {
   );
 }
 
-function AnimatedCounter({ end, suffix, isInView }: { end: number; suffix: string; isInView: boolean }) {
+function AnimatedCounter({
+  end,
+  suffix,
+  isInView,
+}: {
+  end: number;
+  suffix: string;
+  isInView: boolean;
+}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -88,8 +98,9 @@ function AnimatedCounter({ end, suffix, isInView }: { end: number; suffix: strin
   }, [end, isInView]);
 
   return (
-    <div className="text-5xl md:text-6xl font-display font-bold text-gold-300">
-      {count.toFixed(end % 1 === 0 ? 0 : 1)}{suffix}
+    <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-gold-300">
+      {count.toFixed(end % 1 === 0 ? 0 : 1)}
+      {suffix}
     </div>
   );
 }

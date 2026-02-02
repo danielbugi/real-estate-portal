@@ -127,6 +127,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import ArticleCard from '@/components/ArticleCard';
+import CTAWithForm from '@/components/CTAWithForm';
 import { Article } from '@/types';
 
 export default function ArticlesPage() {
@@ -249,29 +250,10 @@ export default function ArticlesPage() {
       </section>
 
       {/* Lead Form Section - Replaces Newsletter */}
-      <section className="section-padding luxury-gradient">
-        <div className="container-custom max-w-3xl text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl font-bold mb-4">
-              מעוניינים לקבל מידע נוסף?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8">
-              השאירו פרטים ונחזור אליכם בהקדם עם מידע מפורט על הזדמנויות השקעה
-              בקפריסין
-            </p>
-            <button
-              onClick={() => setShowLeadForm(true)}
-              className="btn-primary text-lg px-8 py-4"
-            >
-              השאירו פרטים לייעוץ חינם
-            </button>
-          </motion.div>
-        </div>
-      </section>
+      <CTAWithForm
+        title="מעוניינים לקבל מידע נוסף?"
+        subtitle="השאירו פרטים ונחזור אליכם בהקדם עם מידע מפורט על הזדמנויות השקעה בקפריסין"
+      />
 
       {/* Article Modal */}
       {selectedArticle && (

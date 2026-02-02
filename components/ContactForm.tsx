@@ -28,7 +28,13 @@ export default function ContactForm() {
 
       if (response.ok) {
         setIsSuccess(true);
-        setFormData({ name: '', email: '', phone: '', budget: '', message: '' });
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          budget: '',
+          message: '',
+        });
         setTimeout(() => setIsSuccess(false), 5000);
       }
     } catch (error) {
@@ -38,8 +44,12 @@ export default function ContactForm() {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -65,10 +75,13 @@ export default function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       onSubmit={handleSubmit}
-      className="glass-effect p-8 rounded-2xl space-y-6"
+      className="glass-effect p-6 sm:p-8 rounded-2xl space-y-4 sm:space-y-6"
     >
       <div>
-        <label htmlFor="name" className="block text-sm font-semibold mb-2">
+        <label
+          htmlFor="name"
+          className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
+        >
           שם מלא
         </label>
         <input

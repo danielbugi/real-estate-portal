@@ -8,7 +8,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[50vh] overflow-hidden">
+      <section className="relative h-[40vh] sm:h-[45vh] md:h-[50vh] overflow-hidden">
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -22,15 +22,15 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-ocean-900/90 via-ocean-800/85 to-ocean-900/90" />
         </div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4">
               צרו קשר
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl">
+            <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl">
               אנחנו כאן כדי לענות על כל שאלה ולסייע לכם במסע ההשקעה
             </p>
           </motion.div>
@@ -40,74 +40,75 @@ export default function ContactPage() {
       {/* Contact Section */}
       <section className="section-padding bg-gradient-to-b from-slate-50 to-white">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl font-bold mb-6">
-                בואו <span className="text-ocean-500">נדבר</span>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
+                הצעד הבא להשקעה בטוחה בקפריסין מתחיל כאן
               </h2>
-              <p className="text-lg text-gray-600 mb-8">
+              <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8">
                 הצוות המקצועי שלנו זמין לשירותכם ומוכן לסייע בכל שאלה או בקשה
               </p>
 
-              <div className="space-y-6">
-                {/* Phone */}
-                <div className="flex items-start gap-4">
-                  <div className="bg-ocean-100 p-4 rounded-lg">
-                    <Phone className="w-6 h-6 text-ocean-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">טלפון</h3>
-                    <p className="text-gray-600">+972-50-123-4567</p>
-                    <p className="text-gray-600">+357-99-123-456</p>
-                  </div>
-                </div>
+              <div className="space-y-4 sm:space-y-6">
+                <article>
+                  <p className="mb-3 sm:mb-4 text-base sm:text-lg">
+                    <strong>ידע הוא כוח, אבל דיוק הוא ביטחון.</strong>
+                  </p>
+                  <p className="mb-3 sm:mb-4 text-sm sm:text-base md:text-lg text-gray-600">
+                    בעולם הנדל"ן הדינמי של קפריסין, המרחק בין הזדמנות למציאות
+                    עובר דרך מידע מהימן ומאומת. האתר שלנו הוקם במטרה אחת: להנגיש
+                    עבורכם את התמונה המלאה, העדכנית והמדויקת ביותר, המבוססת על
+                    ניתוח מעמיק של השוק המקומי.
+                  </p>
 
-                {/* Email */}
-                <div className="flex items-start gap-4">
-                  <div className="bg-gold-100 p-4 rounded-lg">
-                    <Mail className="w-6 h-6 text-gold-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">אימייל</h3>
-                    <p className="text-gray-600">info@cyprus-invest.com</p>
-                    <p className="text-gray-600">sales@cyprus-invest.com</p>
-                  </div>
-                </div>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+                    הסטנדרט המקצועי שלנו
+                  </h2>
+                  <p className="mb-3 sm:mb-4 text-sm sm:text-base md:text-lg text-gray-600">
+                    הצוות מאחורי האתר מורכב מאנשי מקצוע החיים ונושמים את עולם
+                    ההשקעות. אנחנו לא מסתפקים בנתונים יבשים – אנחנו מפלטרים
+                    עבורכם את רעשי הרקע כדי להגיש לכם רק את המידע הרלוונטי
+                    והמדויק ביותר, תוך הקפדה על שקיפות מלאה וערכיות ללא פשרות.
+                  </p>
 
-                {/* Location */}
-                <div className="flex items-start gap-4">
-                  <div className="bg-brown-100 p-4 rounded-lg">
-                    <MapPin className="w-6 h-6 text-brown-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">כתובת</h3>
-                    <p className="text-gray-600">רח׳ דיזנגוף 123, תל אביב</p>
-                    <p className="text-gray-600">Limassol Marina, קפריסין</p>
-                  </div>
-                </div>
+                  <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+                    למה לצפות כשמשאירים פרטים?
+                  </h2>
+                  <p className="mb-3 sm:mb-4 text-sm sm:text-base md:text-lg text-gray-600">
+                    אנחנו מאמינים שלכל משקיע מגיע ליווי ברמה הגבוהה ביותר. לכן,
+                    אנחנו עובדים בשיתוף פעולה הדוק עם
+                    <strong>היועצים ומשרדי הנדל"ן המובילים בישראל</strong>,
+                    המתמחים ספציפית בשוק הקפריסאי.
+                  </p>
 
-                {/* Hours */}
-                <div className="flex items-start gap-4">
-                  <div className="bg-ocean-100 p-4 rounded-lg">
-                    <Clock className="w-6 h-6 text-ocean-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-lg mb-1">שעות פעילות</h3>
-                    <p className="text-gray-600">ראשון - חמישי: 9:00 - 18:00</p>
-                    <p className="text-gray-600">שישי: 9:00 - 14:00</p>
-                  </div>
-                </div>
+                  <ul className="list-disc list-inside space-y-1.5 sm:space-y-2">
+                    <li className="text-xs sm:text-sm md:text-base text-gray-600">
+                      <strong>ייעוץ מותאם אישית:</strong> חיבור למומחים שיודעים
+                      להתאים את ההשקעה ליעדים שלכם.
+                    </li>
+                    <li className="text-xs sm:text-sm md:text-base text-gray-600">
+                      <strong>ליווי מקצועי:</strong> מעטפת ביטחון מלאה מרגע
+                      בחינת המידע ועד להשלמת התהליך.
+                    </li>
+                    <li className="text-xs sm:text-sm md:text-base text-gray-600">
+                      <strong>ביטחון מוחלט:</strong> עבודה מול הגורמים המנוסים
+                      והאמינים ביותר בענף.
+                    </li>
+                  </ul>
+                </article>
               </div>
 
               {/* Social Links */}
-              <div className="mt-8 pt-8 border-t border-gray-200">
-                <h3 className="font-bold text-lg mb-4">עקבו אחרינו</h3>
-                <div className="flex gap-4">
+              <div className="mt-6 sm:mt-8 pt-6 sm:pt-8 border-t border-gray-200">
+                <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4">
+                  עקבו אחרינו
+                </h3>
+                <div className="flex flex-wrap gap-2 sm:gap-4">
                   {['Facebook', 'Instagram', 'LinkedIn', 'WhatsApp'].map(
                     (platform, idx) => (
                       <a
@@ -117,7 +118,7 @@ export default function ContactPage() {
                       >
                         {platform}
                       </a>
-                    )
+                    ),
                   )}
                 </div>
               </div>
@@ -129,8 +130,10 @@ export default function ContactPage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <div className="glass-effect p-8 rounded-2xl">
-                <h3 className="text-2xl font-bold mb-6">שלחו לנו הודעה</h3>
+              <div className="glass-effect p-6 sm:p-8 rounded-2xl">
+                <h3 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">
+                  שלחו לנו הודעה
+                </h3>
                 <ContactForm />
               </div>
             </motion.div>
@@ -139,7 +142,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section */}
-      <section className="section-padding bg-white">
+      {/* <section className="section-padding bg-white">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -154,7 +157,7 @@ export default function ContactPage() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Israel Office */}
+         
             <div className="glass-effect rounded-2xl overflow-hidden">
               <div className="h-64 bg-gradient-to-br from-ocean-400 to-ocean-600 flex items-center justify-center">
                 <div className="text-center text-white">
@@ -172,7 +175,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Cyprus Office */}
+          
             <div className="glass-effect rounded-2xl overflow-hidden">
               <div className="h-64 bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
                 <div className="text-center text-white">
@@ -191,19 +194,36 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
-      {/* FAQ Section */}
+      {/* Section of nice cyprus picture */}
+      <section className="relative h-64 md:h-[65vh] overflow-hidden">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage:
+              'url(https://cdn.pixabay.com/photo/2017/04/12/15/54/residence-2224882_1280.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+      </section>
       <section className="section-padding luxury-gradient">
         <div className="container-custom max-w-3xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-12"
+            className="text-center mb-8 sm:mb-12"
           >
-            <h2 className="text-4xl font-bold mb-4">שאלות נפוצות</h2>
-            <p className="text-xl text-gray-600">תשובות לשאלות הנפוצות ביותר</p>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
+              שאלות נפוצות
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600">
+              תשובות לשאלות הנפוצות ביותר
+            </p>
           </motion.div>
 
           <div className="space-y-4">
@@ -231,10 +251,12 @@ export default function ContactPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                className="glass-effect p-6 rounded-xl"
+                className="glass-effect p-4 sm:p-6 rounded-xl"
               >
-                <h3 className="font-bold text-lg mb-2">{faq.q}</h3>
-                <p className="text-gray-600">{faq.a}</p>
+                <h3 className="font-bold text-base sm:text-lg mb-1.5 sm:mb-2">
+                  {faq.q}
+                </h3>
+                <p className="text-sm sm:text-base text-gray-600">{faq.a}</p>
               </motion.div>
             ))}
           </div>

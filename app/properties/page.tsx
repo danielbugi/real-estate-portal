@@ -11,6 +11,7 @@ import {
   Building2,
 } from 'lucide-react';
 import PropertyCard from '@/components/PropertyCard';
+import CTAWithForm from '@/components/CTAWithForm';
 import { Property } from '@/types';
 
 export default function PropertiesPage() {
@@ -32,7 +33,7 @@ export default function PropertiesPage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] overflow-hidden">
+      <section className="relative h-[50vh] sm:h-[55vh] md:h-[60vh] overflow-hidden">
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -46,11 +47,11 @@ export default function PropertiesPage() {
           <div className="absolute inset-0 bg-gradient-to-b from-ocean-900/90 via-ocean-800/80 to-ocean-900/90" />
         </div>
 
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4 sm:px-6">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-6xl font-bold text-white mb-4"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4"
           >
             נכסים יוקרתיים בקפריסין
           </motion.h1>
@@ -58,7 +59,7 @@ export default function PropertiesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-white/90 max-w-2xl"
+            className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl"
           >
             גלו את מגוון הנכסים המובחרים שלנו עם תשואה גבוהה
           </motion.p>
@@ -68,7 +69,7 @@ export default function PropertiesPage() {
       {/* Filters */}
       <section className="section-padding bg-white border-b">
         <div className="container-custom">
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-2 sm:gap-3 md:gap-4 justify-center">
             {[
               { value: 'all', label: 'הכל' },
               { value: 'villa', label: 'וילות' },
@@ -79,7 +80,7 @@ export default function PropertiesPage() {
               <button
                 key={item.value}
                 onClick={() => setFilter(item.value)}
-                className={`px-6 py-3 rounded-lg font-medium transition-all ${
+                className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                   filter === item.value
                     ? 'bg-ocean-500 text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -121,25 +122,10 @@ export default function PropertiesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="section-padding luxury-gradient">
-        <div className="container-custom text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              לא מצאתם את מה שחיפשתם?
-            </h2>
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              הצוות שלנו יעזור לכם למצוא את הנכס המושלם בהתאם לדרישות שלכם
-            </p>
-            <a href="/contact" className="btn-primary">
-              צרו קשר עכשיו
-            </a>
-          </motion.div>
-        </div>
-      </section>
+      <CTAWithForm
+        title="לא מצאתם את מה שחיפשתם?"
+        subtitle="הצוות שלנו יעזור לכם למצוא את הנכס המושלם בהתאם לדרישות שלכם"
+      />
     </div>
   );
 }

@@ -3,24 +3,28 @@ import Link from 'next/link';
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {/* About Section */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">אודות</h3>
-            <p className="text-gray-400 text-sm">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              אודות
+            </h3>
+            <p className="text-gray-400 text-xs sm:text-sm">
               פורטל המידע וההשקעות המוביל של ישראל לנדל"ן יוקרתי בקפריסין
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">קישורים מהירים</h3>
-            <ul className="space-y-2">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              קישורים מהירים
+            </h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               <li>
                 <Link
                   href="/"
-                  className="text-gray-400 hover:text-white transition-colors text-sm"
+                  className="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm"
                 >
                   דף הבית
                 </Link>
@@ -62,8 +66,10 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">יצירת קשר</h3>
-            <ul className="space-y-2 text-gray-400 text-sm">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              יצירת קשר
+            </h3>
+            <ul className="space-y-1.5 sm:space-y-2 text-gray-400 text-xs sm:text-sm">
               <li>אימייל: info@cyprus-insights.com</li>
               <li>טלפון: +972-50-000-0000</li>
               <li>כתובת: תל אביב, ישראל</li>
@@ -72,8 +78,10 @@ export default function Footer() {
 
           {/* Social Media */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">עקבו אחרינו</h3>
-            <div className="flex space-x-4 space-x-reverse">
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              עקבו אחרינו
+            </h3>
+            <div className="flex space-x-3 sm:space-x-4 space-x-reverse">
               <a
                 href="#"
                 className="text-gray-400 hover:text-white transition-colors"
@@ -118,8 +126,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-8 pt-8 text-center">
-          <p className="text-gray-400 text-sm">
+        <div className="border-t border-gray-800 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
+          <p className="text-gray-400 text-xs sm:text-sm">
             © {new Date().getFullYear()} Cyprus Insights. כל הזכויות שמורות.
           </p>
           <p className="text-gray-500 text-xs mt-2">

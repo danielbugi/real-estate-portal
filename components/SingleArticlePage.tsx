@@ -18,6 +18,7 @@ import {
   Tag,
 } from 'lucide-react';
 import { Article } from '@/types';
+import CTAWithForm from './CTAWithForm';
 
 interface SingleArticlePageProps {
   slug: string;
@@ -35,6 +36,7 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
     name: '',
     email: '',
     phone: '',
+    budget: '',
     message: '',
   });
 
@@ -68,14 +70,19 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...leadForm,
-          budget: 'interested',
           interestedIn: article ? [article.titleHe] : ['כתבה'],
         }),
       });
 
       if (res.ok) {
         setFormSubmitted(true);
-        setLeadForm({ name: '', email: '', phone: '', message: '' });
+        setLeadForm({
+          name: '',
+          email: '',
+          phone: '',
+          budget: '',
+          message: '',
+        });
         setTimeout(() => {
           setFormSubmitted(false);
           setShowLeadForm(false);
@@ -115,11 +122,11 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
 
   return (
     <div
-      className="min-h-screen bg-gradient-to-b from-slate-50 to-white"
+      className=" min-h-screen bg-gradient-to-b from-slate-50 to-white pt-12"
       dir="rtl"
     >
       {/* Back Navigation */}
-      <div className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+      {/* <div className="bg-white border-b border-gray-200  top-0 z-40 shadow-sm">
         <div className="container-custom py-4">
           <button
             onClick={() => router.push('/articles')}
@@ -129,11 +136,18 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
             <span className="font-medium">חזרה לכל המאמרים</span>
           </button>
         </div>
-      </div>
+      </div> */}
 
       {/* Article Content */}
       <article className="section-padding">
-        <div className="container-custom max-w-4xl">
+        <div className="container-custom">
+          <button
+            onClick={() => router.push('/articles')}
+            className="flex items-center gap-2 text-ocean-600 hover:text-ocean-700 transition group"
+          >
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span className="font-medium">חזרה לכל המאמרים</span>
+          </button>
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main Content - 2 columns */}
             <div className="lg:col-span-2">
@@ -221,7 +235,7 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
-                className="prose prose-lg max-w-none mb-12"
+                className="article-content mb-12"
                 dangerouslySetInnerHTML={{
                   __html: article.contentHtml || article.content || '',
                 }}
@@ -245,6 +259,12 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
               </div>
             </div>
           </div>
+        </div>
+        <div className="container-custom mt-16">
+          <CTAWithForm
+            title="מתעניינים בהזדמנויות השקעה בקפריסין?"
+            subtitle="השאירו פרטים ונחזור אליכם עם מידע מפורט"
+          />
         </div>
       </article>
 
@@ -274,7 +294,9 @@ function LeadFormSidebar({ formData, setFormData, onSubmit, submitted }: any) {
         </div>
       ) : (
         <>
-          <h3 className="text-2xl font-bold mb-2">מעוניינים לדעת יותר?</h3>
+          <h3 className="text-2xl font-bold mb-2">
+            מתעניינים בהזדמנויות השקעה בקפריסין?
+          </h3>
           <p className="text-blue-100 mb-6 text-sm">
             השאירו פרטים ונחזור אליכם עם מידע מפורט
           </p>
@@ -335,6 +357,26 @@ function LeadFormSidebar({ formData, setFormData, onSubmit, submitted }: any) {
                   placeholder="050-1234567"
                 />
               </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-blue-100 mb-2">
+                תקציב השקעה *
+              </label>
+              <select
+                required
+                value={formData.budget}
+                onChange={(e) =>
+                  setFormData({ ...formData, budget: e.target.value })
+                }
+                className="w-full px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-white outline-none"
+              >
+                <option value="">בחר תקציב</option>
+                <option value="150-300k">€150,000 - €300,000</option>
+                <option value="300-500k">€300,000 - €500,000</option>
+                <option value="500-750k">€500,000 - €750,000</option>
+                <option value="750k+">€750,000+</option>
+              </select>
             </div>
 
             <div>
@@ -478,6 +520,26 @@ function LeadFormModal({
                     placeholder="050-1234567"
                   />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  תקציב השקעה *
+                </label>
+                <select
+                  required
+                  value={formData.budget}
+                  onChange={(e) =>
+                    setFormData({ ...formData, budget: e.target.value })
+                  }
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-500 focus:border-transparent outline-none"
+                >
+                  <option value="">בחר תקציב</option>
+                  <option value="150-300k">€150,000 - €300,000</option>
+                  <option value="300-500k">€300,000 - €500,000</option>
+                  <option value="500-750k">€500,000 - €750,000</option>
+                  <option value="750k+">€750,000+</option>
+                </select>
               </div>
 
               <div>

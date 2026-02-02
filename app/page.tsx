@@ -77,7 +77,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Fixed Background */}
-      <section className="relative h-[85vh] overflow-hidden">
+      <section className="relative h-[90vh] sm:h-[85vh] overflow-hidden">
         {/* Fixed Background */}
         {/* Fixed Background */}
         <div
@@ -94,14 +94,14 @@ export default function HomePage() {
         </div>
 
         {/* Hero Content */}
-        <div className="container-custom relative z-10 h-full flex flex-col items-start justify-center text-center px-4">
+        <div className="container-custom relative z-10 h-full flex flex-col items-start justify-center text-center px-4 sm:px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-5xl lg:text-5xl text-start font-display font-bold text-white mb-6 text-shadow-lg">
-              <span className="uppercase font-light text-3xl ">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-start font-display font-bold text-white mb-4 sm:mb-6 text-shadow-lg">
+              <span className="uppercase font-light text-xl sm:text-2xl md:text-3xl">
                 Cyprus Insights
               </span>
               <br />
@@ -112,7 +112,7 @@ export default function HomePage() {
           </motion.div>
 
           <motion.p
-            className="text-xl md:text-2xl text-white/90 mb-12 max-w-3xl text-shadow"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -123,7 +123,7 @@ export default function HomePage() {
           </motion.p>
 
           <motion.ul
-            className="text-xl md:text-xl text-white/90 text-start list-disc list-inside space-y-2 mb-12 max-w-3xl text-shadow mr-6"
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 text-start list-disc list-inside space-y-1.5 sm:space-y-2 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow mr-4 sm:mr-6"
             dir="rtl"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -137,13 +137,15 @@ export default function HomePage() {
           </motion.ul>
 
           <motion.div
-            className="absolute bottom-28 left-0 right-0 flex justify-center"
+            className="mt-6 sm:mt-8 md:absolute md:bottom-28 left-0 right-0 flex justify-center"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
           >
-            {/* <button className="btn-primary text-lg">גלו נכסים יוקרתיים</button> */}
-            <button className="btn-secondary text-lg">דברו איתנו</button>
+            {/* <button className="btn-primary text-base sm:text-lg">גלו נכסים יוקרתיים</button> */}
+            <button className="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
+              דברו איתנו
+            </button>
           </motion.div>
         </div>
 
@@ -180,11 +182,11 @@ export default function HomePage() {
                 </span>
               </div>
 
-              <h2 className="text-4xl md:text-4xl lg:text-4xl font-display font-bold mb-6 text-gradient leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 sm:mb-6 text-gradient leading-tight">
                 יתרונות השקעה בקפריסין
               </h2>
 
-              <p className="text-xl text-gray-600 mb-10 leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 md:mb-10 leading-relaxed">
                 קפריסין מציעה שילוב ייחודי של יתרונות שהופכים אותה ליעד ההשקעה
                 המועדף על משקיעים ישראלים
               </p>
@@ -239,14 +241,14 @@ export default function HomePage() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: item.delay, duration: 0.5 }}
-                    className="flex gap-4 group"
+                    className="flex gap-3 sm:gap-4 group"
                   >
                     {/* Content */}
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1.5 sm:mb-2">
                         {item.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed">
+                      <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
                         {item.desc}
                       </p>
                     </div>
@@ -263,12 +265,12 @@ export default function HomePage() {
               transition={{ duration: 0.6 }}
               className="order-2 lg:order-1 relative"
             >
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+              <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl">
                 {/* Main image */}
                 <img
                   src="https://images.unsplash.com/photo-1602523362493-529ae4e7e4ea?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   alt="Cyprus coastal view"
-                  className="w-full h-[600px] object-cover"
+                  className="w-full h-64 sm:h-96 md:h-[500px] lg:h-[600px] object-cover"
                 />
 
                 {/* Overlay gradient */}
@@ -290,12 +292,12 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 md:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3 sm:mb-4">
               נכסים <span className="text-ocean-500">נבחרים</span>
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600">
               הזדמנויות השקעה יוקרתיות בקפריסין
             </p>
           </motion.div>
@@ -323,6 +325,36 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="section-padding bg-gradient-to-b from-slate-50 to-white">
+        <div className="mb-12 text-center">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 sm:mb-6">
+            הדרך המקצועית להשקעה חכמה בקפריסין
+          </h2>
+
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto py-4 sm:py-6">
+            השקעה נבונה בנדל"ן מתחילה בנתונים מדויקים ומסתיימת בליווי חסר פשרות.
+            הצוות המקצועי שלנו מביא עמו <strong>ניסיון עשיר ומוכח</strong>{' '}
+            בניתוח שוק הנדל"ן הקפריסאי, מתוך מחויבות עמוקה לערכים של{' '}
+            <strong>אמינות, שקיפות ודיוק אבסולוטי.</strong>
+          </p>
+
+          <ul className="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto space-y-4">
+            <li>
+              <strong>תשואה ומקצועיות:</strong> איתור פוטנציאל תשואה מקסימלי על
+              בסיס נתונים ריאליים וניתוח מגמות.
+            </li>
+            <li>
+              <strong>ניסיון בשטח:</strong> חיבור ישיר ליועצים ומשרדי הנדל"ן
+              המובילים בישראל, המומחים בשוק המקומי.
+            </li>
+            <li>
+              <strong>ביטחון מוחלט:</strong> מעטפת מקצועית וערכית המלווה אתכם
+              לאורך כל הדרך, מהבדיקה הראשונית ועד לסגירה.
+            </li>
+          </ul>
+        </div>
+      </section>
+
       {/* Stats Section */}
       <StatsSection />
 
@@ -333,12 +365,12 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-8 sm:mb-12 md:mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-display font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3 sm:mb-4">
               מאמרים <span className="text-gold-500">מובילים</span>
             </h2>
-            <p className="text-xl text-gray-600">
+            <p className="text-base sm:text-lg md:text-xl text-gray-600">
               כל מה שצריך לדעת על השקעה בקפריסין
             </p>
           </motion.div>
@@ -375,35 +407,15 @@ export default function HomePage() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4 sm:mb-6">
                 בואו נדבר על <span className="text-ocean-500">ההשקעה</span> שלכם
               </h2>
-              <p className="text-xl text-gray-600 mb-8">
-                הצוות המקצועי שלנו כאן כדי לסייע לכם למצוא את הנכס המושלם
-                בקפריסין
+              <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
+                אל תסתפקו במידע חלקי. אנו מזמינים אתכם לתיאום{' '}
+                <strong>שיחת ייעוץ ללא עלות</strong>, בה נבחן את אסטרטגיית
+                ההשקעה שלכם ונתאם <strong>פגישה מקצועית</strong> עם המומחים
+                הרלוונטיים עבורכם.
               </p>
-
-              <div className="space-y-4">
-                <div className="flex items-center gap-4">
-                  <div className="bg-ocean-100 p-3 rounded-lg">
-                    <Phone className="w-6 h-6 text-ocean-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">טלפון</div>
-                    <div className="text-gray-600">+972-50-123-4567</div>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4">
-                  <div className="bg-gold-100 p-3 rounded-lg">
-                    <Mail className="w-6 h-6 text-gold-600" />
-                  </div>
-                  <div>
-                    <div className="font-semibold">אימייל</div>
-                    <div className="text-gray-600">info@cyprus-invest.com</div>
-                  </div>
-                </div>
-              </div>
             </motion.div>
 
             <motion.div
