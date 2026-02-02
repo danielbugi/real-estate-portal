@@ -50,7 +50,10 @@ export default function NotFound() {
           </svg>
         </motion.div>
         <motion.div
-          animate={{ ...waveAnimation, transition: { ...waveAnimation.transition, delay: 1 } }}
+          animate={{
+            ...waveAnimation,
+            transition: { ...waveAnimation.transition, delay: 1 },
+          }}
           className="absolute bottom-0 left-0 right-0"
         >
           <svg
@@ -87,7 +90,8 @@ export default function NotFound() {
             <h1
               className="text-[180px] md:text-[250px] font-bold leading-none"
               style={{
-                background: 'linear-gradient(135deg, rgb(0, 135, 175) 0%, rgb(212, 175, 55) 100%)',
+                background:
+                  'linear-gradient(135deg, rgb(0, 135, 175) 0%, rgb(212, 175, 55) 100%)',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -119,7 +123,8 @@ export default function NotFound() {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="w-32 h-1 mx-auto mb-8 rounded-full"
             style={{
-              background: 'linear-gradient(90deg, rgb(0, 135, 175), rgb(212, 175, 55))',
+              background:
+                'linear-gradient(90deg, rgb(0, 135, 175), rgb(212, 175, 55))',
             }}
           />
 
@@ -134,7 +139,10 @@ export default function NotFound() {
               href="/"
               className="group relative overflow-hidden bg-white hover:bg-gradient-to-r hover:from-[rgb(0,135,175)] hover:to-[rgb(0,115,155)] text-gray-800 hover:text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 border-2 border-[rgb(0,135,175)]"
             >
-              <Home size={24} className="group-hover:scale-110 transition-transform" />
+              <Home
+                size={24}
+                className="group-hover:scale-110 transition-transform"
+              />
               <span className="font-semibold text-lg">חזרה לעמוד הבית</span>
             </Link>
 
@@ -142,7 +150,10 @@ export default function NotFound() {
               href="/properties"
               className="group relative overflow-hidden bg-white hover:bg-gradient-to-r hover:from-[rgb(212,175,55)] hover:to-[rgb(192,155,35)] text-gray-800 hover:text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 border-2 border-[rgb(212,175,55)]"
             >
-              <Search size={24} className="group-hover:scale-110 transition-transform" />
+              <Search
+                size={24}
+                className="group-hover:scale-110 transition-transform"
+              />
               <span className="font-semibold text-lg">חיפוש נכסים</span>
             </Link>
 
@@ -150,7 +161,10 @@ export default function NotFound() {
               href="/articles"
               className="group relative overflow-hidden bg-white hover:bg-gradient-to-r hover:from-[rgb(0,135,175)] hover:to-[rgb(0,115,155)] text-gray-800 hover:text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 border-2 border-[rgb(0,135,175)]"
             >
-              <Compass size={24} className="group-hover:scale-110 transition-transform" />
+              <Compass
+                size={24}
+                className="group-hover:scale-110 transition-transform"
+              />
               <span className="font-semibold text-lg">מדריכים ומאמרים</span>
             </Link>
 
@@ -158,7 +172,10 @@ export default function NotFound() {
               href="/contact"
               className="group relative overflow-hidden bg-white hover:bg-gradient-to-r hover:from-[rgb(212,175,55)] hover:to-[rgb(192,155,35)] text-gray-800 hover:text-white px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 border-2 border-[rgb(212,175,55)]"
             >
-              <Waves size={24} className="group-hover:scale-110 transition-transform" />
+              <Waves
+                size={24}
+                className="group-hover:scale-110 transition-transform"
+              />
               <span className="font-semibold text-lg">צור קשר</span>
             </Link>
           </motion.div>
@@ -171,8 +188,9 @@ export default function NotFound() {
             className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg border-2 border-blue-200"
           >
             <p className="text-gray-700 text-sm md:text-base">
-              <span className="font-bold text-[rgb(0,135,175)]">💡 ידעת?</span> קפריסין היא
-              האי השלישי בגודלו בים התיכון, ומציעה למעלה מ-300 ימי שמש בשנה! 🌞
+              <span className="font-bold text-[rgb(0,135,175)]">💡 ידעת?</span>{' '}
+              קפריסין היא האי השלישי בגודלו בים התיכון, ומציעה למעלה מ-300 ימי
+              שמש בשנה! 🌞
             </p>
           </motion.div>
         </div>
