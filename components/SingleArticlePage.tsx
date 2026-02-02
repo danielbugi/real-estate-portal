@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import {
   Calendar,
   Clock,
@@ -186,12 +187,15 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mb-8"
+                    className="mb-8 relative h-[400px] w-full"
                   >
-                    <img
+                    <Image
                       src={article.featuredImageUrl}
                       alt={article.titleHe || article.title}
-                      className="w-full h-[400px] object-cover rounded-2xl shadow-xl"
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 60vw"
+                      className="object-cover rounded-2xl shadow-xl"
+                      priority
                     />
                   </motion.div>
                 )}

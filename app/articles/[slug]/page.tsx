@@ -3,26 +3,9 @@ import clientPromise from '@/lib/mongodb';
 
 const siteUrl = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
-// This will generate static pages for all articles at build time
-export async function generateStaticParams() {
-  try {
-    const client = await clientPromise;
-    const db = client.db('cyprus_invest');
-
-    const articles = await db
-      .collection('articles')
-      .find({ published: true, status: 'approved' })
-      .project({ slug: 1 })
-      .toArray();
-
-    return articles.map((article: any) => ({
-      slug: article.slug,
-    }));
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
+// Dynamic rendering to avoid file system issues with Hebrew characters
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
 
 // Dynamic metadata with enhanced SEO
 export async function generateMetadata({
@@ -57,6 +40,17 @@ export async function generateMetadata({
           'נכסים בקפריסין',
         ],
         authors: [{ name: 'Cyprus Insights' }],
+        robots: {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            'max-video-preview': -1,
+            'max-image-preview': 'large',
+            'max-snippet': -1,
+          },
+        },
         openGraph: {
           type: 'article',
           locale: 'he_IL',

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Menu, X, Building2, Phone, Mail, Shield, LogOut } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -101,8 +102,13 @@ export default function Navbar() {
 
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="bg-ocean-500 p-1.5 sm:p-2 rounded-lg group-hover:bg-ocean-600 transition-colors">
-              <Building2 className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+              <Image
+                src="/favicon.svg"
+                alt="Cyprus Insights Logo"
+                fill
+                className="object-contain"
+              />
             </div>
             <div>
               <div className="font-bold text-base sm:text-lg md:text-xl uppercase text-ocean-900">

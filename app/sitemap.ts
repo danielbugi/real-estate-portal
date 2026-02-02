@@ -1,18 +1,19 @@
 import { MetadataRoute } from 'next';
+import clientPromise from '@/lib/mongodb';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Fetch all articles for dynamic routes
+  // Fetch all articles for dynamic routes directly from database
   let articles: any[] = [];
   try {
-    const articlesRes = await fetch(`${SITE_URL}/api/articles`, {
-      cache: 'no-store',
-    });
-    if (articlesRes.ok) {
-      const data = await articlesRes.json();
-      articles = data.articles || [];
-    }
+    const client = await clientPromise;
+    const db = client.db('cyprus_invest');
+    articles = await db
+      .collection('articles')
+      .find({ published: true, status: 'approved' })
+      .project({ slug: 1, updatedAt: 1, createdAt: 1 })
+      .toArray();
   } catch (error) {
     console.error('Error fetching articles for sitemap:', error);
   }

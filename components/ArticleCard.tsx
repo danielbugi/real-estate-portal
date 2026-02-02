@@ -65,6 +65,7 @@
 // }
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, Clock, ArrowLeft } from 'lucide-react';
 import { Article } from '@/types';
 
@@ -83,10 +84,13 @@ export default function ArticleCard({ article }: ArticleCardProps) {
         {/* Image */}
         {imageUrl && (
           <div className="relative h-64 overflow-hidden">
-            <img
+            <Image
               src={imageUrl}
               alt={title}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-110"
+              priority={false}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
