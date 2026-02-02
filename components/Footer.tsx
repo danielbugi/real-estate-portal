@@ -65,7 +65,7 @@ export default function Footer() {
           </div>
 
           {/* Contact Info */}
-          <div>
+          {/* <div>
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               יצירת קשר
             </h3>
@@ -74,7 +74,7 @@ export default function Footer() {
               <li>טלפון: +972-50-000-0000</li>
               <li>כתובת: תל אביב, ישראל</li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Social Media */}
           <div>
