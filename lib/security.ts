@@ -239,7 +239,7 @@ export interface LogEntry {
   userId?: string;
   status?: number;
   error?: string;
-  body?: any;
+  username?: string;
 }
 
 export function createLogEntry(

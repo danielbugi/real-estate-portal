@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
         message: `Account temporarily blocked for ${blockedMinutes} minutes`,
         retryAfter: rateLimitResult.blockedUntil,
       },
-      { status: 429 }
+      { status: 429 },
     );
   }
 
@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         { error: 'Username and password are required' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -66,13 +66,13 @@ export async function POST(request: NextRequest) {
       const logEntry = createLogEntry(request, {
         status: 401,
         error: 'Invalid username',
-        body: { username }, // Don't log password!
+        username, // Log username only, never password
       });
       await saveLog(logEntry);
 
       return NextResponse.json(
         { error: 'Invalid username or password' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
 
       return NextResponse.json(
         { error: 'Invalid username or password' },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -145,7 +145,7 @@ export async function POST(request: NextRequest) {
         error: 'Internal server error',
         details: error instanceof Error ? error.message : 'Unknown error',
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

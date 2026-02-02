@@ -95,6 +95,8 @@ export default function AdminLoginPage() {
                   placeholder="Enter your username"
                   required
                   disabled={isLoading}
+                  autoComplete="username"
+                  name="username"
                 />
               </div>
             </div>
@@ -116,6 +118,8 @@ export default function AdminLoginPage() {
                   placeholder="Enter your password"
                   required
                   disabled={isLoading}
+                  autoComplete="current-password"
+                  name="password"
                 />
               </div>
             </div>
