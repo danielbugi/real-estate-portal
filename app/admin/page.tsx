@@ -43,7 +43,7 @@ export default function AdminLoginPage() {
       }
 
       // Success - redirect to dashboard
-      router.push('/admin/dashboard');
+      window.location.href = '/admin/dashboard';
     } catch (err) {
       setError('An error occurred. Please try again.');
       setIsLoading(false);

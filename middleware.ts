@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/security';
 
+// Force middleware to use Node.js runtime instead of Edge runtime
+export const runtime = 'nodejs';
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -15,7 +18,10 @@ export function middleware(request: NextRequest) {
     // Check for admin token
     const token = request.cookies.get('admin_token')?.value;
 
+    console.log(`[Middleware] Checking ${pathname}, token exists:`, !!token);
+
     if (!token) {
+      console.log('[Middleware] No token found, redirecting to login');
       // Redirect to login if no token
       return NextResponse.redirect(new URL('/admin', request.url));
     }
@@ -24,6 +30,7 @@ export function middleware(request: NextRequest) {
     const payload = verifyToken(token);
 
     if (!payload) {
+      console.log('[Middleware] Invalid token, redirecting to login');
       // Redirect to login if token is invalid or expired
       const response = NextResponse.redirect(new URL('/admin', request.url));
       // Clear invalid token
@@ -31,6 +38,7 @@ export function middleware(request: NextRequest) {
       return response;
     }
 
+    console.log('[Middleware] Token valid, allowing access');
     // Token is valid, allow access
     return NextResponse.next();
   }

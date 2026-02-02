@@ -204,12 +204,20 @@ export function verifyToken(token: string): any | null {
   try {
     const [header, body, signature] = token.split('.');
 
+    if (!header || !body || !signature) {
+      console.log('[verifyToken] Invalid token format');
+      return null;
+    }
+
     const expectedSignature = crypto
       .createHmac('sha256', JWT_SECRET)
       .update(`${header}.${body}`)
       .digest('base64url');
 
     if (signature !== expectedSignature) {
+      console.log('[verifyToken] Signature mismatch');
+      console.log('Expected:', expectedSignature.substring(0, 20));
+      console.log('Received:', signature.substring(0, 20));
       return null;
     }
 
@@ -217,11 +225,14 @@ export function verifyToken(token: string): any | null {
 
     // Check expiration
     if (payload.exp < Date.now()) {
+      console.log('[verifyToken] Token expired');
       return null;
     }
 
+    console.log('[verifyToken] Token valid for user:', payload.username);
     return payload;
-  } catch {
+  } catch (error) {
+    console.log('[verifyToken] Error:', error);
     return null;
   }
 }
