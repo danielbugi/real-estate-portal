@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         { error: 'Missing required fields: title, titleHe, contentHtml' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(
       { error: 'Internal server error' },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -35,7 +35,7 @@ async function createAdmin() {
     const { MONGODB_URI } = env.loadEnvConfig(process.cwd()).combinedEnv;
 
     console.log(
-      `Checking environment variables... \nMONGODB_URI: ${MONGODB_URI}\n`
+      `Checking environment variables... \nMONGODB_URI: ${MONGODB_URI}\n`,
     );
 
     if (!MONGODB_URI) {

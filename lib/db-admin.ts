@@ -71,7 +71,7 @@ export interface AdminUser {
 }
 
 export async function createAdminUser(
-  user: Omit<AdminUser, '_id' | 'createdAt'>
+  user: Omit<AdminUser, '_id' | 'createdAt'>,
 ): Promise<ObjectId> {
   const client = await clientPromise;
   const db = client.db('cyprus_invest');
@@ -93,7 +93,7 @@ export async function createAdminUser(
 }
 
 export async function getAdminUser(
-  username: string
+  username: string,
 ): Promise<AdminUser | null> {
   const client = await clientPromise;
   const db = client.db('cyprus_invest');
@@ -163,7 +163,7 @@ export async function updateArticle(id: string, updates: any) {
         ...updates,
         updatedAt: new Date(),
       },
-    }
+    },
   );
 
   return result;
@@ -172,7 +172,7 @@ export async function updateArticle(id: string, updates: any) {
 export async function updateArticleStatus(
   id: string,
   status: 'pending' | 'approved' | 'rejected',
-  published?: boolean
+  published?: boolean,
 ) {
   const client = await clientPromise;
   const db = client.db('cyprus_invest');

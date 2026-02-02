@@ -1,27 +1,27 @@
 import SingleArticlePage from '@/components/SingleArticlePage';
+import clientPromise from '@/lib/mongodb';
 
 const siteUrl = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
 // This will generate static pages for all articles at build time
 export async function generateStaticParams() {
   try {
-    const res = await fetch(`${siteUrl}/api/articles`, {
-      cache: 'no-store',
-    });
-    const data = await res.json();
+    const client = await clientPromise;
+    const db = client.db('cyprus_invest');
 
-    if (data.success && data.articles) {
-      return data.articles
-        .filter((article: any) => article.published)
-        .map((article: any) => ({
-          slug: article.slug,
-        }));
-    }
+    const articles = await db
+      .collection('articles')
+      .find({ published: true, status: 'approved' })
+      .project({ slug: 1 })
+      .toArray();
+
+    return articles.map((article: any) => ({
+      slug: article.slug,
+    }));
   } catch (error) {
     console.error('Error generating static params:', error);
+    return [];
   }
-
-  return [];
 }
 
 // Dynamic metadata with enhanced SEO
@@ -32,13 +32,17 @@ export async function generateMetadata({
 }) {
   try {
     const { slug } = await params;
-    const res = await fetch(`${siteUrl}/api/articles/${slug}`, {
-      cache: 'no-store',
-    });
-    const data = await res.json();
 
-    if (data.success && data.article) {
-      const article = data.article;
+    const client = await clientPromise;
+    const db = client.db('cyprus_invest');
+
+    const article = await db.collection('articles').findOne({
+      slug,
+      published: true,
+      status: 'approved',
+    });
+
+    if (article) {
       const title = article.titleHe || article.title;
       const description =
         article.excerptHe || article.excerpt || 'מאמר על השקעות נדל"ן בקפריסין';

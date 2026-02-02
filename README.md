@@ -1,4 +1,5 @@
 # 🏖️ Cyprus Real Estate Investment Platform
+
 ## נדל"ן יוקרתי בקפריסין - פלטפורמת השקעות
 
 A luxury real estate investment website for Israeli investors looking to invest in Cyprus properties. Built with Next.js 14, MongoDB, and automated content generation via n8n.
@@ -6,6 +7,7 @@ A luxury real estate investment website for Israeli investors looking to invest 
 ## ✨ Features
 
 ### 🎨 Design
+
 - **Luxury Color Palette**: Ocean blue, gold, and brown
 - **Hebrew RTL Support**: Full right-to-left layout
 - **Parallax Effects**: Smooth scrolling animations
@@ -13,22 +15,26 @@ A luxury real estate investment website for Israeli investors looking to invest 
 - **Responsive Design**: Mobile-first approach
 
 ### 🏠 Property Showcase
+
 - Property cards with images, specs, and ROI data
 - Real Cyprus market data integration
 - Filter by city, price, bedrooms, property type
 - Automatic currency conversion (EUR ↔ ILS)
 
 ### 📚 Content Management
+
 - Investment guides and market analysis articles
 - Automated content creation via n8n
 - Real-time data from Cyprus property market
 
 ### 🔗 n8n Integration
+
 - Webhook endpoint for automated content posting
 - Supports both properties and articles
 - Secure authentication with webhook secrets
 
 ### 📊 Lead Generation
+
 - Contact form with MongoDB storage
 - Budget selection and interest tracking
 - Ready for email/CRM integration
@@ -36,6 +42,7 @@ A luxury real estate investment website for Israeli investors looking to invest 
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Node.js 18+ installed
 - MongoDB Atlas account (free tier)
 - n8n instance (optional, for automation)
@@ -43,11 +50,13 @@ A luxury real estate investment website for Israeli investors looking to invest 
 ### Installation
 
 1. **Clone or download the project**
+
 ```bash
 cd cyprus-invest
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
@@ -55,6 +64,7 @@ npm install
 3. **Set up environment variables**
 
 Create `.env.local` file:
+
 ```env
 # MongoDB Connection
 MONGODB_URI=mongodb+srv://your-username:your-password@cluster.mongodb.net/cyprus_invest?retryWrites=true&w=majority
@@ -64,6 +74,7 @@ N8N_WEBHOOK_SECRET=your-super-secret-key-here
 ```
 
 4. **Run development server**
+
 ```bash
 npm run dev
 ```
@@ -73,11 +84,13 @@ Visit `http://localhost:3000` 🎉
 ## 📦 MongoDB Setup
 
 ### 1. Create Free MongoDB Atlas Account
+
 - Go to [mongodb.com/atlas](https://www.mongodb.com/atlas)
 - Sign up for free (512MB free tier)
 - Create a new cluster
 
 ### 2. Get Connection String
+
 - Click "Connect" → "Connect your application"
 - Copy the connection string
 - Replace `<username>` and `<password>` with your credentials
@@ -87,6 +100,7 @@ Visit `http://localhost:3000` 🎉
 The app automatically creates these collections:
 
 **properties**
+
 ```javascript
 {
   title: "Luxury Villa",
@@ -107,6 +121,7 @@ The app automatically creates these collections:
 ```
 
 **articles**
+
 ```javascript
 {
   title: "Investment Guide",
@@ -123,6 +138,7 @@ The app automatically creates these collections:
 ```
 
 **leads**
+
 ```javascript
 {
   name: "...",
@@ -163,6 +179,7 @@ The app automatically creates these collections:
 ### Webhook Request Format
 
 **Create Property:**
+
 ```bash
 curl -X POST https://your-domain.vercel.app/api/content \
   -H "x-webhook-secret: your-secret" \
@@ -205,6 +222,7 @@ curl -X POST https://your-domain.vercel.app/api/content \
 ```
 
 **Create Article:**
+
 ```bash
 curl -X POST https://your-domain.vercel.app/api/content \
   -H "x-webhook-secret: your-secret" \
@@ -232,6 +250,7 @@ curl -X POST https://your-domain.vercel.app/api/content \
 ### Deploy to Vercel (Free)
 
 1. **Push code to GitHub**
+
 ```bash
 git init
 git add .
@@ -242,6 +261,7 @@ git push -u origin main
 ```
 
 2. **Deploy to Vercel**
+
 - Go to [vercel.com](https://vercel.com)
 - Import your GitHub repository
 - Add environment variables (MONGODB_URI, N8N_WEBHOOK_SECRET)
@@ -250,6 +270,7 @@ git push -u origin main
 3. **Your site will be live at**: `your-project.vercel.app`
 
 ### Custom Domain (Optional)
+
 - Buy domain (~$10/year)
 - Add to Vercel project settings
 - Update DNS records
@@ -292,25 +313,31 @@ Brown:      #8B7355 (rgb(139, 115, 85))
 ## 🔧 Customization
 
 ### Change Colors
+
 Edit `tailwind.config.js` → `theme.extend.colors`
 
 ### Add More Properties
+
 Either:
+
 1. Use n8n automation to POST to `/api/content`
 2. Add directly to MongoDB
 3. Update `lib/mock-data.ts` for development
 
 ### Modify Texts
+
 All Hebrew texts are in components - search for `"He"` suffix
 
 ## 📊 Analytics & Monitoring
 
 Add Vercel Analytics (free):
+
 ```bash
 npm install @vercel/analytics
 ```
 
 In `app/layout.tsx`:
+
 ```tsx
 import { Analytics } from '@vercel/analytics/react';
 
@@ -340,6 +367,7 @@ MIT License - Free to use and modify
 ## 🤝 Support
 
 For questions or support:
+
 - Email: info@cyprus-invest.com
 - Create an issue on GitHub
 
