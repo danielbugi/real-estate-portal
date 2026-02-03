@@ -50,12 +50,23 @@
 
 @layer components {
   .luxury-gradient {
+    position: relative;
     background: linear-gradient(
       135deg,
       rgba(0, 135, 175, 0.1) 0%,
       rgba(212, 175, 55, 0.05) 50%,
       rgba(139, 115, 85, 0.1) 100%
     );
+    background-image: 
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.92) 0%,
+        rgba(248, 250, 252, 0.88) 100%
+      ),
+      url('/cyprus_png.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
   }
 
   .glass-effect {
