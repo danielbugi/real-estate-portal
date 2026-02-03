@@ -4,7 +4,16 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Menu, X, Building2, Phone, Mail, Shield, LogOut } from 'lucide-react';
+import {
+  Menu,
+  X,
+  Building2,
+  Phone,
+  Mail,
+  Shield,
+  LogOut,
+  ChevronDown,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
@@ -12,6 +21,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isInvestmentsOpen, setIsInvestmentsOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,10 +63,16 @@ export default function Navbar() {
     { href: '/contact', label: 'צור קשר' },
   ];
 
+  const cityLinks = [
+    { href: '/investments/limassol', label: 'נדל"ן בלימסול' },
+    { href: '/investments/paphos', label: 'נדל"ן בפאפוס' },
+    { href: '/investments/larnaca', label: 'נדל"ן בלרנקה' },
+    { href: '/investments/nicosia', label: 'נדל"ן בניקוסיה' },
+  ];
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-lg'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-lg`}
     >
       <div className="container-custom">
         <div className="flex items-center justify-between h-20">
@@ -66,11 +82,54 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-medium hover:text-ocean-500 transition-colors  text-gray-900"
+                className="font-medium hover:text-ocean-500 transition-colors text-gray-900"
               >
                 {link.label}
               </Link>
             ))}
+
+            {/* Investments Dropdown */}
+            <div
+              className="relative"
+              onMouseEnter={() => setIsInvestmentsOpen(true)}
+              onMouseLeave={() => setIsInvestmentsOpen(false)}
+            >
+              <button className="font-medium hover:text-ocean-500 transition-colors text-gray-900 flex items-center gap-1">
+                נדל"ן לפי עיר
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${isInvestmentsOpen ? 'rotate-180' : ''}`}
+                />
+              </button>
+
+              <AnimatePresence>
+                {isInvestmentsOpen && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 py-2"
+                  >
+                    {cityLinks.map((city) => (
+                      <Link
+                        key={city.href}
+                        href={city.href}
+                        className="block px-4 py-2 text-gray-700 hover:bg-ocean-50 hover:text-ocean-600 transition-colors"
+                      >
+                        {city.label}
+                      </Link>
+                    ))}
+                    <div className="border-t border-gray-100 my-2" />
+                    <Link
+                      href="/investments"
+                      className="block px-4 py-2 text-ocean-600 font-semibold hover:bg-ocean-50 transition-colors"
+                    >
+                      כל הערים →
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+
             {isAdmin && (
               <>
                 <Link
@@ -147,6 +206,31 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+              {/* Mobile Cities Links */}
+              <div className="border-t border-gray-200 pt-4">
+                <div className="text-sm font-semibold text-gray-500 mb-2 px-2">
+                  השקעות לפי עיר
+                </div>
+                {cityLinks.map((city) => (
+                  <Link
+                    key={city.href}
+                    href={city.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block py-2 px-4 text-gray-700 hover:text-ocean-500 transition-colors"
+                  >
+                    {city.label}
+                  </Link>
+                ))}
+                <Link
+                  href="/investments"
+                  onClick={() => setIsOpen(false)}
+                  className="block py-2 px-4 text-ocean-600 font-semibold hover:text-ocean-700 transition-colors"
+                >
+                  כל הערים →
+                </Link>
+              </div>
+
               {isAdmin && (
                 <>
                   <Link

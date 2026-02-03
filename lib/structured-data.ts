@@ -152,3 +152,36 @@ export function generateFAQSchema(
     })),
   };
 }
+
+export function generateCityInvestmentSchema(cityData: {
+  city: string;
+  cityHe: string;
+  title: string;
+  metaDescription: string;
+  excerpt: string;
+  featuredImage: string;
+  slug: string;
+}) {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: `השקעות נדל"ן ב${cityData.cityHe}`,
+    description: cityData.metaDescription,
+    image: cityData.featuredImage,
+    provider: {
+      '@type': 'RealEstateAgent',
+      name: 'Cyprus Insights',
+      url: siteUrl,
+    },
+    areaServed: {
+      '@type': 'City',
+      name: cityData.city,
+      addressCountry: 'CY',
+    },
+    serviceType: 'Real Estate Investment Consulting',
+    url: `${siteUrl}/investments/${cityData.slug}`,
+  };
+}

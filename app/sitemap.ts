@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import clientPromise from '@/lib/mongodb';
+import { getAllCitySlugs } from '@/lib/city-data';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
@@ -45,6 +46,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.9,
     },
     {
+      url: `${SITE_URL}/investments`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.95,
+    },
+    {
       url: `${SITE_URL}/contact`,
       lastModified: new Date(),
       changeFrequency: 'monthly' as const,
@@ -62,5 +69,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     }));
 
-  return [...staticPages, ...articlePages];
+  // Dynamic city investment pages
+  const citySlugs = getAllCitySlugs();
+  const cityPages = citySlugs.map((slug) => ({
+    url: `${SITE_URL}/investments/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.9,
+  }));
+
+  return [...staticPages, ...articlePages, ...cityPages];
 }

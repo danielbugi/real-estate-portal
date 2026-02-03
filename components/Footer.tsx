@@ -1,15 +1,34 @@
 import Link from 'next/link';
+import Image from 'next/image';
+import { getAllCitySlugs } from '@/lib/city-data';
 
 export default function Footer() {
+  const cities = [
+    { slug: 'limassol', name: 'לימסול' },
+    { slug: 'paphos', name: 'פאפוס' },
+    { slug: 'larnaca', name: 'לרנקה' },
+    { slug: 'nicosia', name: 'ניקוסיה' },
+  ];
+
   return (
     <footer className="bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
-          {/* About Section */}
+          {/* Cyprus Insights Logo & Brand */}
           <div>
-            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
-              אודות
-            </h3>
+            <div className="flex items-center gap-2 mb-3 sm:mb-4">
+              <div className="relative w-8 h-8 sm:w-10 sm:h-10">
+                <Image
+                  src="/favicon.svg"
+                  alt="Cyprus Insights Logo"
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="text-base sm:text-lg font-bold">
+                CYPRUS INSIGHTS
+              </h3>
+            </div>
             <p className="text-gray-400 text-xs sm:text-sm">
               פורטל המידע וההשקעות המוביל של ישראל לנדל"ן יוקרתי בקפריסין
             </p>
@@ -75,6 +94,25 @@ export default function Footer() {
               <li>כתובת: תל אביב, ישראל</li>
             </ul>
           </div> */}
+
+          {/* Investments by City */}
+          <div>
+            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              נדל"ן לפי עיר
+            </h3>
+            <ul className="space-y-1.5 sm:space-y-2">
+              {cities.map((city) => (
+                <li key={city.slug}>
+                  <Link
+                    href={`/investments/${city.slug}`}
+                    className="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm"
+                  >
+                    {city.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           {/* Social Media */}
           <div>
