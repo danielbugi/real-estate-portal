@@ -6,6 +6,7 @@ import Footer from '@/components/Footer';
 import AccessibilityWidget from '@/components/AccessibilityWidget';
 import { AccessibilityWrapper } from '@/components/AccessibilityWrapper';
 import { generateOrganizationSchema } from '@/lib/structured-data';
+import Script from 'next/script';
 
 const heebo = Heebo({
   subsets: ['hebrew', 'latin'],
@@ -103,12 +104,26 @@ export default function RootLayout({
   return (
     <html lang="he" dir="rtl">
       <head>
-        <script
+        <Script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema),
           }}
         />
+        {/* <!-- Google tag (gtag.js) --> */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-3FBV51922X"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-3FBV51922X');
+          `}
+        </Script>
       </head>
       <body className={`${heebo.variable} ${assistant.variable} font-sans`}>
         <a href="#main-content" className="skip-to-content">
