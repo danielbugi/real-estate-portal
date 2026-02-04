@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
@@ -26,13 +26,11 @@ import {
 } from '@/lib/structured-data';
 
 interface SingleArticlePageProps {
-  slug: string;
+  article: Article;
 }
 
-export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
+export default function SingleArticlePage({ article }: SingleArticlePageProps) {
   const router = useRouter();
-  const [article, setArticle] = useState<Article | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [showLeadForm, setShowLeadForm] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -45,27 +43,6 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
     message: '',
   });
 
-  useEffect(() => {
-    fetchArticle();
-  }, [slug]);
-
-  const fetchArticle = async () => {
-    try {
-      const res = await fetch(`/api/articles/${slug}`);
-      const data = await res.json();
-      if (data.success) {
-        setArticle(data.article);
-      } else {
-        router.push('/articles');
-      }
-    } catch (error) {
-      console.error('Failed to fetch article:', error);
-      router.push('/articles');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -75,7 +52,7 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...leadForm,
-          interestedIn: article ? [article.titleHe] : ['כתבה'],
+          interestedIn: [article.titleHe],
         }),
       });
 
@@ -101,7 +78,7 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
   const handleShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: article?.titleHe || article?.title,
+        title: article.titleHe || article.title,
         url: window.location.href,
       });
     } else {
@@ -109,21 +86,6 @@ export default function SingleArticlePage({ slug }: SingleArticlePageProps) {
       alert('הקישור הועתק ללוח!');
     }
   };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <BookOpen className="w-16 h-16 mx-auto text-ocean-600 animate-pulse mb-4" />
-          <p className="text-gray-500 text-lg">טוען מאמר...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!article) {
-    return null;
-  }
 
   // Generate structured data
   const articleSchema = generateArticleSchema(article);

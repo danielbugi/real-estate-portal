@@ -1,70 +1,59 @@
-'use client';
-
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen } from 'lucide-react';
 import ArticleCard from '@/components/ArticleCard';
 import { Article } from '@/types';
+import clientPromise from '@/lib/mongodb';
+import { Metadata } from 'next';
+import ArticlesHeroSection from '@/components/ArticlesHeroSection';
 
-export default function ArticlesPage() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export const metadata: Metadata = {
+  title: 'מאמרים ומדריכים על נדל"ן בקפריסין | Cyprus Insights',
+  description:
+    'מדריכים מקיפים, מאמרים מקצועיים וכל המידע שצריך לדעת על השקעה בנדל"ן בקפריסין. ייעוץ מקצועי, ניתוחי שוק ומגמות עדכניות.',
+  keywords:
+    'מאמרים נדלן קפריסין, מדריך השקעה קפריסין, נדלן בקפריסין, השקעות בחו"ל, נכסים באירופה',
+  openGraph: {
+    title: 'מאמרים ומדריכים על נדל"ן בקפריסין',
+    description:
+      'מידע מקצועי ועדכני עבור משקיעים חכמים - מדריכים, ניתוחים והמלצות על השקעה בנדל"ן קפריסאי',
+    type: 'website',
+    locale: 'he_IL',
+  },
+};
 
-  useEffect(() => {
-    fetch('/api/articles')
-      .then((res) => res.json())
-      .then((data) => {
-        setArticles(data.articles || []);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching articles:', error);
-        setIsLoading(false);
-      });
-  }, []);
+// Revalidate every hour (3600 seconds) for ISR
+export const revalidate = 3600;
+
+// Server-side data fetching
+async function getArticles(): Promise<Article[]> {
+  try {
+    const client = await clientPromise;
+    const db = client.db('cyprus_invest');
+
+    const articles = await db
+      .collection('articles')
+      .find({ published: true, status: 'approved' })
+      .sort({ createdAt: -1 })
+      .limit(50)
+      .toArray();
+
+    return JSON.parse(JSON.stringify(articles)) as Article[];
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    return [];
+  }
+}
+
+export default async function ArticlesPage() {
+  const articles = await getArticles();
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[60vh] overflow-hidden">
-        <div
-          className="absolute inset-0 z-0"
-          style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1450101499163-c8848c66ca85?q=80&w=2070)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-gold-900/90 via-gold-800/80 to-gold-900/90" />
-        </div>
-
-        <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-          >
-            <BookOpen className="w-16 h-16 text-white mx-auto mb-4" />
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-4">
-              מדריכים ומאמרים
-            </h1>
-            <p className="text-xl text-white/90 max-w-2xl">
-              כל מה שצריך לדעת על השקעה בנדל״ן בקפריסין
-            </p>
-          </motion.div>
-        </div>
-      </section>
+      <ArticlesHeroSection />
 
       {/* Articles Grid */}
       <section className="section-padding bg-gradient-to-b from-slate-50 to-white">
         <div className="container-custom">
-          {isLoading ? (
-            <div className="text-center py-20">
-              <BookOpen className="w-16 h-16 mx-auto text-gray-300 mb-4 animate-pulse" />
-              <p className="text-gray-500 text-lg">טוען מאמרים...</p>
-            </div>
-          ) : articles.length > 0 ? (
+          {articles.length > 0 ? (
             <>
               <div className="text-center mb-12">
                 <h2 className="text-3xl font-bold mb-4">
@@ -85,7 +74,6 @@ export default function ArticlesPage() {
             </>
           ) : (
             <div className="text-center py-20">
-              <BookOpen className="w-16 h-16 mx-auto text-gray-300 mb-4" />
               <p className="text-gray-500 text-lg">אין מאמרים זמינים כרגע</p>
             </div>
           )}

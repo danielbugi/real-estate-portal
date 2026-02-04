@@ -123,7 +123,7 @@ export default function Navbar() {
                       href="/investments"
                       className="block px-4 py-2 text-ocean-600 font-semibold hover:bg-ocean-50 transition-colors"
                     >
-                      כל הערים →
+                      כל הערים
                     </Link>
                   </motion.div>
                 )}

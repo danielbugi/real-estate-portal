@@ -4,16 +4,16 @@ import { useEffect, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 
+const stats = [
+  { value: 8.3, suffix: '%', label: 'צמיחה שנתית בשוק הנדל"ן' },
+  { value: 300, suffix: '+', label: 'נכסים יוקרתיים במאגר' },
+  { value: 5.2, suffix: '%', label: 'תשואה ממוצעת מהשכרה' },
+  { value: 12.5, suffix: '%', label: 'מס חברות בקפריסין' },
+];
+
 export default function StatsSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-
-  const stats = [
-    { value: 8.3, suffix: '%', label: 'צמיחה שנתית בשוק הנדל"ן' },
-    { value: 300, suffix: '+', label: 'נכסים יוקרתיים במאגר' },
-    { value: 5.2, suffix: '%', label: 'תשואה ממוצעת מהשכרה' },
-    { value: 12.5, suffix: '%', label: 'מס חברות בקפריסין' },
-  ];
 
   return (
     <section className="section-padding bg-gradient-to-r from-ocean-600 to-ocean-700 text-white relative overflow-hidden">
@@ -24,19 +24,14 @@ export default function StatsSection() {
       </div>
 
       <div className="container-custom relative z-10" ref={ref}>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10 sm:mb-12 md:mb-16"
-        >
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-3 sm:mb-4">
             המספרים מדברים בעד עצמם
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-white/80">
             נתונים אמיתיים משוק הנדל״ן בקפריסין 2024-2025
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {stats.map((stat, idx) => (
@@ -75,10 +70,13 @@ function AnimatedCounter({
   suffix: string;
   isInView: boolean;
 }) {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(end); // Start with the final value for SEO
 
   useEffect(() => {
     if (!isInView) return;
+
+    // Reset to 0 for animation only when in view
+    setCount(0);
 
     let start = 0;
     const duration = 2000;

@@ -1,10 +1,14 @@
 import SingleArticlePage from '@/components/SingleArticlePage';
 import clientPromise from '@/lib/mongodb';
+import { Article } from '@/types';
+import { notFound } from 'next/navigation';
 
 const siteUrl = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
-// Dynamic rendering to avoid file system issues with Hebrew characters
-export const dynamic = 'force-dynamic';
+// Enable ISR - revalidate every hour
+export const revalidate = 3600;
+
+// Enable dynamic rendering for Hebrew slugs (to avoid filesystem issues on Windows)
 export const dynamicParams = true;
 
 // Dynamic metadata with enhanced SEO
@@ -14,7 +18,10 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }) {
   try {
-    const { slug } = await params;
+    const { slug: rawSlug } = await params;
+
+    // Decode the URL-encoded slug (handles Hebrew characters)
+    const slug = decodeURIComponent(rawSlug);
 
     const client = await clientPromise;
     const db = client.db('cyprus_invest');
@@ -97,6 +104,35 @@ export default async function ArticlePage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params;
-  return <SingleArticlePage slug={slug} />;
+  const { slug: rawSlug } = await params;
+
+  // Decode the URL-encoded slug (handles Hebrew characters)
+  const slug = decodeURIComponent(rawSlug);
+
+  // Fetch article server-side
+  let article: Article | null = null;
+
+  try {
+    const client = await clientPromise;
+    const db = client.db('cyprus_invest');
+
+    const result = await db.collection('articles').findOne({
+      slug,
+      published: true,
+      status: 'approved',
+    });
+
+    if (result) {
+      article = JSON.parse(JSON.stringify(result)) as Article;
+    }
+  } catch (error) {
+    console.error('Error fetching article:', error);
+  }
+
+  // If no article found, show 404
+  if (!article) {
+    notFound();
+  }
+
+  return <SingleArticlePage article={article} />;
 }
