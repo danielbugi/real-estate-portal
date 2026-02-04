@@ -5,15 +5,15 @@ import { revalidatePath } from 'next/cache';
 export async function POST(request: NextRequest) {
   try {
     // Security check - verify webhook secret (optional, uncomment to enable)
-    // const secret = request.headers.get('x-webhook-secret');
-    // const expectedSecret = process.env.N8N_WEBHOOK_SECRET;
+    const secret = request.headers.get('x-webhook-secret');
+    const expectedSecret = process.env.N8N_WEBHOOK_SECRET;
 
-    // if (!expectedSecret || secret !== expectedSecret) {
-    //   return NextResponse.json(
-    //     { error: 'Unauthorized - Invalid webhook secret' },
-    //     { status: 401 }
-    //   );
-    // }
+    if (!expectedSecret || secret !== expectedSecret) {
+      return NextResponse.json(
+        { error: 'Unauthorized - Invalid webhook secret' },
+        { status: 401 },
+      );
+    }
 
     const data = await request.json();
 
