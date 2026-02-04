@@ -11,17 +11,36 @@ import ProfessionalPathSection from '@/components/ProfessionalPathSection';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'השקעות נדל"ן בקפריסין - Cyprus Insights | פורטל והזדמנויות השקעה',
+  title: 'נדל"ן בקפריסין והשקעות נדל"ן | Cyprus Insights - פורטל ההשקעות',
   description:
-    'קפריסין מציעה לישראלים הזדמנות השקעה אידיאלית בנדל"ן אירופאי איכותי. תשואה של 5-9% שנתית, מיסוי מועדף של 12.5%, ו-300+ נכסים יוקרתיים במאגר.',
+    'מחפשים נדל"ן בקפריסין? גלו הזדמנויות השקעה עם 5-9% תשואה שנתית, מיסוי מועדף של 12.5% וליווי מקצועי. מעל 300 נכסי יוקרה מחכים לכם. היכנסו עכשיו!',
   keywords:
-    'נדלן בקפריסין, השקעות בקפריסין, נכסים בקפריסין, דירות בקפריסין, נדלן באירופה, השקעות נדלן',
+    'נדלן בקפריסין, השקעות בקפריסין, נכסים בקפריסין, דירות בקפריסין, דירות למכירה בקפריסין, נדלן באירופה, השקעות נדלן',
+  alternates: {
+    canonical: 'https://www.cyprus-insights.co.il',
+  },
   openGraph: {
     title: 'השקעות נדל"ן בקפריסין - Cyprus Insights',
     description:
       'השקעה חכמה בנדל"ן קפריסאי - תשואה גבוהה, מיסוי מועדף, ו-300+ נכסים יוקרתיים',
-    type: 'website',
+    url: 'https://www.cyprus-insights.co.il',
+    siteName: 'Cyprus Insights',
+    images: [
+      {
+        url: '/favicon.svg', // וודא שיש לך תמונה כזו בתיקיית public
+        width: 1200,
+        height: 630,
+        alt: 'נדל"ן בקפריסין - Cyprus Insights',
+      },
+    ],
     locale: 'he_IL',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'השקעות נדל"ן בקפריסין - Cyprus Insights',
+    description: 'השקעה חכמה בנדל"ן קפריסאי - תשואה גבוהה ומיסוי מועדף',
+    images: ['https://www.cyprus-insights.co.il/og-image.jpg'],
   },
 };
 
