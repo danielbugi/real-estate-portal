@@ -18,8 +18,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .find({ published: true, status: 'approved' })
       .project({ slug: 1, updatedAt: 1, createdAt: 1 })
       .toArray();
+    
+    console.log(`[Sitemap] Successfully fetched ${articles.length} articles from database`);
   } catch (error) {
-    console.error('Error fetching articles for sitemap:', error);
+    console.error('[Sitemap] Error fetching articles:', error);
+    console.error('[Sitemap] MONGODB_URI exists:', !!process.env.MONGODB_URI);
   }
 
   // Static pages
@@ -63,14 +66,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Dynamic article pages
-  const articlePages = articles
-    .filter((article) => article.published)
-    .map((article) => ({
-      url: `${SITE_URL}/articles/${article.slug}`,
-      lastModified: new Date(article.updatedAt || article.createdAt),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    }));
+  const articlePages = articles.map((article) => ({
+    url: `${SITE_URL}/articles/${article.slug}`,
+    lastModified: new Date(article.updatedAt || article.createdAt),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+  
+  console.log(`[Sitemap] Generated ${articlePages.length} article URLs`);
 
   // Dynamic city investment pages
   const citySlugs = getAllCitySlugs();
