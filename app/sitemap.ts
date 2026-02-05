@@ -4,6 +4,9 @@ import { getAllCitySlugs } from '@/lib/city-data';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
+// Revalidate sitemap every hour
+export const revalidate = 3600;
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all articles for dynamic routes directly from database
   let articles: any[] = [];
