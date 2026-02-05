@@ -67,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Dynamic article pages
   const articlePages = articles.map((article) => ({
-    url: `${SITE_URL}/articles/${article.slug}`,
+    url: `${SITE_URL}/articles/${encodeURIComponent(article.slug)}`,
     lastModified: new Date(article.updatedAt || article.createdAt),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
