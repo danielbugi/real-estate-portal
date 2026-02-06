@@ -11,6 +11,10 @@ export const revalidate = 3600;
 // Enable dynamic rendering for Hebrew slugs (to avoid filesystem issues on Windows)
 export const dynamicParams = true;
 
+// Don't generate static params at build time due to Hebrew slug filesystem issues
+// Articles will be rendered on-demand with ISR
+export const dynamic = 'force-dynamic';
+
 // Dynamic metadata with enhanced SEO
 export async function generateMetadata({
   params,

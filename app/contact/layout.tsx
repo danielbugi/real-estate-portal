@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     'contact Cyprus',
     'real estate consulting',
   ],
+  alternates: {
+    canonical: `${siteUrl}/contact`,
+  },
   robots: {
     index: true,
     follow: true,
@@ -46,9 +49,6 @@ export const metadata: Metadata = {
     title: 'צור קשר - Cyprus Insights',
     description: 'צור קשר לייעוץ מקצועי בנושא השקעות נדל"ן בקפריסין',
     images: [`${siteUrl}/og-image.jpg`],
-  },
-  alternates: {
-    canonical: `${siteUrl}/contact`,
   },
 };
 

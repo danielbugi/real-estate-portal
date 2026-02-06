@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     'investment guides',
     'market analysis',
   ],
+  alternates: {
+    canonical: `${siteUrl}/articles`,
+  },
   robots: {
     index: true,
     follow: true,
@@ -47,9 +50,6 @@ export const metadata: Metadata = {
     title: 'מאמרים ומדריכים - Cyprus Insights',
     description: 'מאמרים וניתוחי שוק מקצועיים על השקעות נדל"ן בקפריסין',
     images: [`${siteUrl}/og-image.jpg`],
-  },
-  alternates: {
-    canonical: `${siteUrl}/articles`,
   },
 };
 

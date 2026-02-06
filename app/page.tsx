@@ -16,14 +16,25 @@ export const metadata: Metadata = {
     'מחפשים השקעה חכמה בקפריסין? מגוון וילות, דירות ופרויקטים חדשים במיקומי שיא. תשואה של 5-9% בשנה, הטבות מס משמעותיות וליווי מקצועי מקצה לקצה. היכנסו עכשיו!',
   keywords:
     'נדלן בקפריסין, השקעות בקפריסין, נכסים בקפריסין, דירות בקפריסין, דירות למכירה בקפריסין, נדלן באירופה, השקעות נדלן',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   alternates: {
-    canonical: 'https://www.cyprus-insights.co.il',
+    canonical: 'https://cyprus-insights.co.il',
   },
   openGraph: {
     title: 'השקעות נדל"ן בקפריסין - Cyprus Insights',
     description:
       'דירות, וילות ופרויקטים להשקעה בקפריסין עם פוטנציאל תשואה גבוה והטבות מס למשקיעים זרים. כל המידע והנכסים במקום אחד.',
-    url: 'https://www.cyprus-insights.co.il',
+    url: 'https://cyprus-insights.co.il',
     siteName: 'Cyprus Insights',
     images: [
       {

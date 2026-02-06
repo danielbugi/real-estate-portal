@@ -14,6 +14,9 @@ export const metadata: Metadata = {
     'Cyprus Insights',
     'real estate experts',
   ],
+  alternates: {
+    canonical: `${siteUrl}/about`,
+  },
   robots: {
     index: true,
     follow: true,
@@ -46,9 +49,6 @@ export const metadata: Metadata = {
     title: 'אודות Cyprus Insights',
     description: 'פורטל המידע וההשקעות המוביל של ישראל לנדל"ן יוקרתי בקפריסין',
     images: [`${siteUrl}/og-image.jpg`],
-  },
-  alternates: {
-    canonical: `${siteUrl}/about`,
   },
 };
 

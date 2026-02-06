@@ -12,6 +12,10 @@ const nextConfig = {
   generateEtags: true,
   // Power by header removal for security
   poweredByHeader: false,
+  // Trailing slash for better crawling
+  trailingSlash: false,
+  // Output mode
+  output: 'standalone',
   // Use server-side rendering for dynamic routes to avoid file path issues with Hebrew
   experimental: {
     // This helps with internationalization

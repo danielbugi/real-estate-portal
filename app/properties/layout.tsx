@@ -16,6 +16,9 @@ export const metadata: Metadata = {
     'luxury real estate',
     'villas Cyprus',
   ],
+  alternates: {
+    canonical: `${siteUrl}/properties`,
+  },
   robots: {
     index: true,
     follow: true,
@@ -50,9 +53,6 @@ export const metadata: Metadata = {
     description:
       'נכסי נדל"ן יוקרתיים בקפריסין - וילות, פנטהאוזים ודירות מובחרות',
     images: [`${siteUrl}/og-image.jpg`],
-  },
-  alternates: {
-    canonical: `${siteUrl}/properties`,
   },
 };
 

@@ -24,6 +24,17 @@ export const metadata: Metadata = {
     'תשואות השקעה קפריסין',
     'איפה להשקיע בקפריסין',
   ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   alternates: {
     canonical: `${siteUrl}/investments`,
   },

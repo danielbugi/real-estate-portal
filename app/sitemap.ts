@@ -4,8 +4,8 @@ import { getAllCitySlugs } from '@/lib/city-data';
 
 const SITE_URL = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
 
-// Revalidate sitemap every hour
-export const revalidate = 3600;
+// Revalidate sitemap every 6 hours
+export const revalidate = 21600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all articles for dynamic routes directly from database
@@ -18,8 +18,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       .find({ published: true, status: 'approved' })
       .project({ slug: 1, updatedAt: 1, createdAt: 1 })
       .toArray();
-    
-    console.log(`[Sitemap] Successfully fetched ${articles.length} articles from database`);
+
+    console.log(
+      `[Sitemap] Successfully fetched ${articles.length} articles from database`,
+    );
   } catch (error) {
     console.error('[Sitemap] Error fetching articles:', error);
     console.error('[Sitemap] MONGODB_URI exists:', !!process.env.MONGODB_URI);
@@ -72,7 +74,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
-  
+
   console.log(`[Sitemap] Generated ${articlePages.length} article URLs`);
 
   // Dynamic city investment pages
