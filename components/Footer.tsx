@@ -168,6 +168,14 @@ export default function Footer() {
           <p className="text-gray-400 text-xs sm:text-sm">
             © {new Date().getFullYear()} Cyprus Insights. כל הזכויות שמורות.
           </p>
+          <div className="mt-3 flex justify-center items-center gap-4 flex-wrap">
+            <Link
+              href="/accessibility"
+              className="text-gray-400 hover:text-white transition-colors text-xs sm:text-sm"
+            >
+              הצהרת נגישות
+            </Link>
+          </div>
           <p className="text-gray-500 text-xs mt-2">
             Powered and built by WolfX Digital
           </p>

@@ -67,14 +67,14 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-effect p-8 md:p-12 rounded-2xl"
+          className="glass-effect p-4 sm:p-6 md:p-12 rounded-2xl"
         >
           {/* Title and Description */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+          <div className="text-center mb-6 md:mb-8">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-display font-bold mb-3 md:mb-4">
               {title}
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl mx-auto px-2">
               {subtitle}
             </p>
           </div>
@@ -93,11 +93,11 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               {/* Row 1: Name and Email */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-semibold mb-2"
+                    className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
                   >
                     שם מלא
                   </label>
@@ -108,7 +108,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none text-sm sm:text-base"
                     placeholder="הכנס את שמך המלא"
                   />
                 </div>
@@ -116,7 +116,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-semibold mb-2"
+                    className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
                   >
                     אימייל
                   </label>
@@ -127,18 +127,18 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none text-sm sm:text-base"
                     placeholder="your@email.com"
                   />
                 </div>
               </div>
 
               {/* Row 2: Phone and Budget */}
-              <div className="grid md:grid-cols-2 gap-6">
+              <div className="grid md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label
                     htmlFor="phone"
-                    className="block text-sm font-semibold mb-2"
+                    className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
                   >
                     טלפון
                   </label>
@@ -149,7 +149,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                     value={formData.phone}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none text-sm sm:text-base"
                     placeholder="050-1234567"
                   />
                 </div>
@@ -157,7 +157,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                 <div>
                   <label
                     htmlFor="budget"
-                    className="block text-sm font-semibold mb-2"
+                    className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
                   >
                     תקציב השקעה
                   </label>
@@ -167,7 +167,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                     value={formData.budget}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none text-sm sm:text-base"
                   >
                     <option value="">בחר תקציב</option>
                     <option value="150-300k">€150,000 - €300,000</option>
@@ -182,7 +182,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-semibold mb-2"
+                  className="block text-xs sm:text-sm font-semibold mb-1.5 sm:mb-2"
                 >
                   הודעה (אופציונלי)
                 </label>
@@ -192,7 +192,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                   value={formData.message}
                   onChange={handleChange}
                   rows={4}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none resize-none"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border border-gray-300 focus:border-ocean-500 focus:ring-2 focus:ring-ocean-200 transition-all outline-none resize-none text-sm sm:text-base"
                   placeholder="ספר לנו על מה אתה מחפש..."
                 />
               </div>
@@ -202,7 +202,7 @@ export default function CTAWithForm({ title, subtitle }: CTAWithFormProps) {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="btn-primary px-12 py-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="btn-primary px-6 sm:px-8 md:px-12 py-3 md:py-4 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base w-full sm:w-auto"
                 >
                   {isSubmitting ? (
                     <>
