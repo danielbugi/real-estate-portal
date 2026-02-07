@@ -4,9 +4,34 @@ export const metadata: Metadata = {
   title: 'הצהרת נגישות | Cyprus Insights',
   description:
     'הצהרת הנגישות של Cyprus Insights - מחויבות לנגישות דיגיטלית, תקני WCAG 2.1 ברמה AA, וכלי נגישות מתקדמים לכלל המשתמשים',
+  keywords: [
+    'נגישות',
+    'הצהרת נגישות',
+    'WCAG 2.1',
+    'תקן ישראלי 5568',
+    'נגישות דיגיטלית',
+    'accessibility statement',
+    'טכנולוגיות מסייעות',
+    'screen readers',
+  ],
+  alternates: {
+    canonical: 'https://cyprus-insights.co.il/accessibility',
+  },
   openGraph: {
     title: 'הצהרת נגישות | Cyprus Insights',
     description: 'הצהרת הנגישות של Cyprus Insights - מחויבות לנגישות דיגיטלית',
+    url: 'https://cyprus-insights.co.il/accessibility',
+    siteName: 'Cyprus Insights',
+    locale: 'he_IL',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
   },
 };
 
