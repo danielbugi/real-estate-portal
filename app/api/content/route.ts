@@ -33,11 +33,17 @@ export async function POST(request: NextRequest) {
 
     for (const article of articles) {
       // Validate required fields
-      if (!article.title || !article.contentHtml || !article.slug) {
+      if (
+        !article.title ||
+        !article.contentHtml ||
+        !article.slug ||
+        !article.originalLink ||
+        !article.originalTitle
+      ) {
         return NextResponse.json(
           {
             error:
-              'Missing required fields: title, contentHtml, and slug are required',
+              'Missing required fields: title, contentHtml, slug, originalLink, and originalTitle are required',
           },
           { status: 400 },
         );
@@ -53,6 +59,7 @@ export async function POST(request: NextRequest) {
         featuredImageUrl:
           article.featuredImageUrl?.imageUrl || article.featuredImageUrl || '',
         imageGenerated: article.imageGenerated || false,
+        originalTitle: article.originalTitle || '',
         originalLink: article.originalLink || '',
         pubDate: article.pubDate || '',
         country: article.country || 'Cyprus',
@@ -72,6 +79,8 @@ export async function POST(request: NextRequest) {
         id: result.insertedId,
         slug: article.slug,
         title: article.title,
+        originalTitle: article.originalTitle,
+        originalLink: article.originalLink,
       });
     }
 
