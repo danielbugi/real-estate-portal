@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { verifyToken } from '@/lib/security';
 
-// Force middleware to use Node.js runtime instead of Edge runtime
-export const runtime = 'nodejs';
+// Middleware MUST run on Edge Runtime (default) - removing runtime override
+// export const runtime = 'nodejs'; // ❌ THIS BREAKS MIDDLEWARE!
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
