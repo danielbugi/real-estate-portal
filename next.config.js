@@ -14,11 +14,25 @@ const nextConfig = {
   poweredByHeader: false,
   // Trailing slash for better crawling
   trailingSlash: false,
-  // Output mode
-  output: 'standalone',
+  // Output mode - removed 'standalone' for better compatibility
+  // output: 'standalone',
   // Use server-side rendering for dynamic routes to avoid file path issues with Hebrew
   experimental: {
     // This helps with internationalization
+  },
+  // Safari compatibility headers
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-DNS-Prefetch-Control',
+            value: 'on',
+          },
+        ],
+      },
+    ];
   },
 };
 

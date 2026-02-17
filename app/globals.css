@@ -31,6 +31,9 @@
 
   html {
     scroll-behavior: smooth;
+    /* Safari-specific fixes */
+    -webkit-overflow-scrolling: touch;
+    -webkit-text-size-adjust: 100%;
   }
 
   h1,
@@ -66,7 +69,8 @@
       url('/cyprus_png.png');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    /* background-attachment: fixed; Removed for Safari compatibility */
+    background-attachment: scroll;
   }
 
   .glass-effect {
@@ -90,7 +94,9 @@
   }
 
   .parallax-section {
-    @apply relative bg-fixed bg-center bg-cover;
+    @apply relative bg-center bg-cover;
+    /* bg-fixed removed for Safari compatibility */
+    background-attachment: scroll;
   }
 
   .section-padding {
@@ -156,6 +162,7 @@
 
 /* Accessibility Styles */
 .high-contrast {
+  -webkit-filter: contrast(1.5);
   filter: contrast(1.5);
 }
 
@@ -164,15 +171,18 @@
 }
 
 .invert-colors {
+  -webkit-filter: invert(1) hue-rotate(180deg);
   filter: invert(1) hue-rotate(180deg);
 }
 
 .invert-colors img,
 .invert-colors video {
+  -webkit-filter: invert(1) hue-rotate(180deg);
   filter: invert(1) hue-rotate(180deg);
 }
 
 .grayscale {
+  -webkit-filter: grayscale(1);
   filter: grayscale(1);
 }
 
