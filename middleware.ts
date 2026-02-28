@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { verifyToken } from '@/lib/security';
+import { verifyTokenEdge } from '@/lib/jwt-edge';
 
 // Middleware MUST run on Edge Runtime (default) - removing runtime override
 // export const runtime = 'nodejs'; // ❌ THIS BREAKS MIDDLEWARE!
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Protect all /admin routes except the login page
@@ -27,7 +27,7 @@ export function middleware(request: NextRequest) {
     }
 
     // Verify token
-    const payload = verifyToken(token);
+    const payload = await verifyTokenEdge(token);
 
     if (!payload) {
       console.log('[Middleware] Invalid token, redirecting to login');
@@ -64,7 +64,7 @@ export function middleware(request: NextRequest) {
       );
     }
 
-    const payload = verifyToken(token);
+    const payload = await verifyTokenEdge(token);
 
     if (!payload) {
       return NextResponse.json(
