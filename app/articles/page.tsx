@@ -4,18 +4,40 @@ import clientPromise from '@/lib/mongodb';
 import { Metadata } from 'next';
 import ArticlesHeroSection from '@/components/ArticlesHeroSection';
 
+const siteUrl = process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
+
 export const metadata: Metadata = {
   title: 'מאמרים ומדריכים על נדל"ן בקפריסין | Cyprus Insights',
   description:
     'מדריכים מקיפים, מאמרים מקצועיים וכל המידע שצריך לדעת על השקעה בנדל"ן בקפריסין. ייעוץ מקצועי, ניתוחי שוק ומגמות עדכניות.',
   keywords:
     'מאמרים נדלן קפריסין, מדריך השקעה קפריסין, נדלן בקפריסין, השקעות בחו"ל, נכסים באירופה',
+  alternates: {
+    canonical: `${siteUrl}/articles`,
+  },
   openGraph: {
     title: 'מאמרים ומדריכים על נדל"ן בקפריסין',
     description:
       'מידע מקצועי ועדכני עבור משקיעים חכמים - מדריכים, ניתוחים והמלצות על השקעה בנדל"ן קפריסאי',
+    url: `${siteUrl}/articles`,
+    siteName: 'Cyprus Insights',
+    images: [
+      {
+        url: `${siteUrl}/cyprus_png.png`,
+        width: 1200,
+        height: 630,
+        alt: 'מאמרים ומדריכים על נדל"ן בקפריסין - Cyprus Insights',
+      },
+    ],
     type: 'website',
     locale: 'he_IL',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'מאמרים ומדריכים על נדל"ן בקפריסין',
+    description:
+      'מידע מקצועי ועדכני עבור משקיעים חכמים - מדריכים, ניתוחים והמלצות על השקעה בנדל"ן קפריסאי',
+    images: [`${siteUrl}/cyprus_png.png`],
   },
 };
 

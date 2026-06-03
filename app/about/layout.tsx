@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     description: 'פורטל המידע וההשקעות המוביל של ישראל לנדל"ן יוקרתי בקפריסין',
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/cyprus_png.png`,
         width: 1200,
         height: 630,
         alt: 'Cyprus Insights - אודותינו',
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'אודות Cyprus Insights',
     description: 'פורטל המידע וההשקעות המוביל של ישראל לנדל"ן יוקרתי בקפריסין',
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/cyprus_png.png`],
   },
 };
 

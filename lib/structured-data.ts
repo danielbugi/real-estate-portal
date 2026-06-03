@@ -19,9 +19,6 @@ export function generateOrganizationSchema() {
       'Luxury Villas',
       'Real Estate Market Analysis',
     ],
-    sameAs: [
-      // Add social media profiles when available
-    ],
   };
 }
 
@@ -106,9 +103,6 @@ export function generateRealEstateListingSchema(property: {
   };
   images: string[];
 }) {
-  const siteUrl =
-    process.env.NEXT_PUBLIC_URL || 'https://cyprus-insights.co.il';
-
   return {
     '@context': 'https://schema.org',
     '@type': 'RealEstateListing',

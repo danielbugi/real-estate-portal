@@ -111,10 +111,10 @@ export default async function CityInvestmentPage({
       url: siteUrl,
       logo: {
         '@type': 'ImageObject',
-        url: `${siteUrl}/logo.png`,
+        url: `${siteUrl}/cyprus_png.png`,
       },
     },
-    datePublished: '2024-01-01',
+    datePublished: '2024-06-01',
     dateModified: new Date().toISOString(),
     mainEntityOfPage: {
       '@type': 'WebPage',

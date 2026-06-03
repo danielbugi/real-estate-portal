@@ -63,7 +63,7 @@ export const metadata: Metadata = {
       'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים. וילות, פנטהאוזים ודירות עם תשואה גבוהה',
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/cyprus_png.png`,
         width: 1200,
         height: 630,
         alt: 'Cyprus Insights - נדלן יוקרתי בקפריסין',
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Cyprus Insights – פורטל המידע וההשקעות של ישראל',
     description: 'השקעות נדל"ן יוקרתיות בקפריסין למשקיעים ישראלים',
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/cyprus_png.png`],
   },
   robots: {
     index: true,

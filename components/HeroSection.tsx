@@ -27,39 +27,30 @@ export default function HeroSection() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-start font-display font-bold text-white mb-4 sm:mb-6 text-shadow-lg">
-            <span className="uppercase font-light text-xl sm:text-2xl md:text-3xl">
-              Cyprus Insights
-            </span>
-            <br />
-            <span>השקעות נדל"ן בקפריסין </span>
-            <br />
-            <span className="text-gold-400">פורטל והזדמנויות השקעה</span>
+            מחפשים להשקיע בנדל&quot;ן בקפריסין?
           </h1>
         </motion.div>
 
         <motion.p
-          className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow"
+          className="text-base sm:text-lg md:text-xl lg:text-2xl text-white/90 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow text-start"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          קפריסין מציעה לישראלים הזדמנות השקעה אידיאלית בנדל"ן אירופאי איכותי,
-          עם שילוב של יתרונות כלכליים, קרבה גיאוגרפית ותרבותית, ואיכות חיים
-          גבוהה.
+          אנחנו מרכזים עבורכם מידע, ניתוחי שוק והזדמנויות השקעה נבחרות בקפריסין, כדי שתוכלו לקבל החלטה מבוססת ובטוחה יותר.
         </motion.p>
 
         <motion.ul
-          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 text-start list-disc list-inside space-y-1.5 sm:space-y-2 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow mr-4 sm:mr-6"
+          className="text-sm sm:text-base md:text-lg lg:text-xl text-white/90 text-start list-none space-y-1.5 sm:space-y-2 mb-6 sm:mb-8 md:mb-12 max-w-3xl text-shadow"
           dir="rtl"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <li>תשואה גבוהה ויציבה על השקעה בנדל"ן</li>
-          <li>יציבות כלכלית ומערכת משפטית אמינה</li>
-          <li>מיסוי מועדף למשקיעים זרים</li>
-          <li>קרבה גיאוגרפית ותרבותית לישראל</li>
-          <li>איכות חיים גבוהה ותשתיות מודרניות</li>
+          <li>✓ תשואה פוטנציאלית משכירות</li>
+          <li>✓ מחירי כניסה נמוכים יחסית לישראל</li>
+          <li>✓ מערכת מיסוי ידידותית למשקיעים זרים</li>
+          <li>✓ קרבה של פחות משעה טיסה מישראל</li>
         </motion.ul>
 
         <motion.div
@@ -69,7 +60,7 @@ export default function HeroSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
         >
           <button className="btn-secondary text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4">
-            דברו איתנו
+            לקבלת מידע על הזדמנויות השקעה
           </button>
         </motion.div>
       </div>

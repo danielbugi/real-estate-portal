@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       'נכסי נדל"ן יוקרתיים בקפריסין - וילות, פנטהאוזים ודירות מובחרות',
     images: [
       {
-        url: `${siteUrl}/og-image.jpg`,
+        url: `${siteUrl}/cyprus_png.png`,
         width: 1200,
         height: 630,
         alt: 'Cyprus Insights - נכסים למכירה',
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: 'נכסים למכירה בקפריסין',
     description:
       'נכסי נדל"ן יוקרתיים בקפריסין - וילות, פנטהאוזים ודירות מובחרות',
-    images: [`${siteUrl}/og-image.jpg`],
+    images: [`${siteUrl}/cyprus_png.png`],
   },
 };
 
